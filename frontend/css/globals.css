@@ -1,3 +1,26 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+#modal {
+background-color: #344423a6;
+position: fixed;
+left: 0;
+right: 0;
+bottom: 0;
+top: 0;
+z-index: 10;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+#modal:empty {
+display: none;
+}
+
+@layer components{
+    .btn {
+        @apply block w-52 px-4 py-1 border-2 border-olivine-900 bg-olivine-400 rounded-lg hover:bg-olivine-600 font-bold mx-auto;
+    } 
+}

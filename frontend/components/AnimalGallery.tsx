@@ -22,7 +22,7 @@ const AnimalGallery = ({ animal_info }: AnimalGalleryProps) => {
         {images.map((image, index) => (
           <div
             key={index}
-            className="w-24 h-24 cursor-pointer border relative rounded-full overflow-hidden shadow-lg lg:w-28 lg:h-28 xl:w-36 xl:h-36"
+            className="w-24 h-24 cursor-pointer border relative rounded-full overflow-hidden shadow-lg lg:w-28 lg:h-28 xl:w-36 xl:h-36 transform transition-transform hover:scale-110"
             onClick={() => setSelectedImage(image)}
           >
             <Image src={image} alt={name} layout="fill" objectFit="cover" />

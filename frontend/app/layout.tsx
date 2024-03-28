@@ -13,6 +13,7 @@ const RootLayout = ({ children }: RootLayoutProps) => {
   return (
     <html lang="es">
       <body>
+        <div id="modal"></div>
         <main className="app">{children}</main>
       </body>
     </html>

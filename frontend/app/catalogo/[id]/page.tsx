@@ -1,9 +1,14 @@
+'use client'
+
 import AnimalGallery from "@components/AnimalGallery";
 import { animals } from "@data/data";
 import Image from "next/image";
+import { useState } from "react";
+import Modal from "@components/Modal";
 
 const AnimalDetails = ({ params }: ParamsProps) => {
   const animal = animals.find((animal) => animal.id === Number(params.id));
+  const [showModal, setShowModal] = useState(false);
   const calcularEtapaVida = (date_birth: Date): string => {
     const hoy = new Date();
     const edad = hoy.getFullYear() - date_birth.getFullYear();
@@ -35,7 +40,7 @@ const AnimalDetails = ({ params }: ParamsProps) => {
             />
           </div>
 
-          <div className="min-w-80 w-4/5 mx-auto shadow-xl bg-olivine-200 p-10 rounded-lg space-y-5">
+          <div className="min-w-80 w-4/5 mx-auto shadow-xl bg-gradient-to-r from-olivine-100 to-olivine-700 p-10 rounded-lg space-y-5 mb-6">
             <AnimalGallery animal_info={animal} />
             <p className="text-2xl text-center font-extrabold text-olivine-900 lg:text-4xl">
               {animal.especie} - {animal.breed} -{" "}
@@ -48,6 +53,19 @@ const AnimalDetails = ({ params }: ParamsProps) => {
               {animal.description}
             </p>
           </div>
+          {showModal ? (
+            <Modal>
+              <div className="w-11/12 p-3 bg-olivine-300 rounded-lg mx-auto relative">
+                <Image className="absolute top-0 right-0 m-1 cursor-pointer" src="/assets/icons/bx-x-circle.svg" alt="icono de perro" width={40} height={40} onClick={() => setShowModal(false)}/>
+                <h1 className="text-xl text-center font-bold text-olivine-950 mt-9 mb-9">Deseo agendar una cita como:</h1>
+                <div>
+                  <button className="btn">Invitado</button>
+                  <button className="btn">Iniciando Sesión</button>
+                </div>
+              </div>
+            </Modal>
+          ) : null}
+          <button className="btn" onClick={() => setShowModal(true)}>Agendar Cita</button>
         </div>
       ) : null}
     </>
