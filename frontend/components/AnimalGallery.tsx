@@ -18,7 +18,7 @@ const AnimalGallery = ({ animal_info }: AnimalGalleryProps) => {
           objectFit="cover"
         />
       </div>
-      <div className="w-full grid grid-cols-2 gap-3 md:grid-flow-col md:min-w-72 items-center">
+      <div className="w-full grid grid-cols-2 gap-3 md:min-w-72 items-center">
         {images.map((image, index) => (
           <div
             key={index}
