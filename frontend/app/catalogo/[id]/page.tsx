@@ -20,9 +20,7 @@ const AnimalDetails = ({ params }: ParamsProps) => {
       {animal ? (
         <div className="mb-11 max-w-7xl mx-auto">
           <div className="flex items-center justify-center mt-8 space-x-3">
-            {/* {animal.especie === "Gato" ? icon = "/assets/icons/bxs-cat.svg" : icon = "/assets/icons/bxs-dog.svg"} */}
             <Image
-              className=""
               src={"/assets/icons/bxs-cat.svg"}
               alt="icono de perro"
               width={40}
@@ -58,7 +56,7 @@ const AnimalDetails = ({ params }: ParamsProps) => {
               <div className="w-11/12 p-3 bg-olivine-300 rounded-lg mx-auto relative">
                 <Image className="absolute top-0 right-0 m-1 cursor-pointer" src="/assets/icons/bx-x-circle.svg" alt="icono de perro" width={40} height={40} onClick={() => setShowModal(false)}/>
                 <h1 className="text-xl text-center font-bold text-olivine-950 mt-9 mb-9">Deseo agendar una cita como:</h1>
-                <div>
+                <div className="space-y-2">
                   <button className="btn">Invitado</button>
                   <button className="btn">Iniciando Sesión</button>
                 </div>
