@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "format": "prettier --write \"components/**/*.{js,jsx,ts,tsx}\" \"app/**/*.{js,jsx,ts,tsx}\""
+    "format": "prettier --write \"components/**/*.{js,jsx,ts,tsx}\" \"app/**/*.{js,jsx,ts,tsx}\"  \"types/**/*.{js,jsx,ts,tsx}\""
   },
   "dependencies": {
     "next": "14.1.4",
