@@ -14,7 +14,7 @@ const Catalogo = () => {
       <h1 className="text-4xl text-center mt-8 text-olivine-800 font-extrabold mb-9">
         Catálogo de animales
       </h1>
-      <div className="w-3/5 flex flex-wrap justify-center mx-auto">
+      <div className="w-3/5 flex flex-wrap justify-center mx-auto gap-3">
         {animals.map((animal: Animal) => (
           <Link href={`/catalogo/${animal.id}`} key={animal.id}>
             <Card
