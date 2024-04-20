@@ -4,14 +4,15 @@ interface CardProps {
   etapa_animal: string;
 }
 
-type Animal = {
+export type Animal = {
   id: number;
   name: string;
   date_birth: Date;
   especie: string;
   breed: string;
-  images: string[];
+  urls_images: string[];
   description: string;
+  creation_date: Date;
 };
 
 interface ParamsProps {
@@ -23,3 +24,5 @@ interface ParamsProps {
 interface AnimalGalleryProps {
   animal_info: Animal;
 }
+
+export type PetsAPIResponse = Animal[];
