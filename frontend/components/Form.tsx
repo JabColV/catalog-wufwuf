@@ -7,13 +7,12 @@ import { validationSchema } from "@utils/functions";
 import { useState } from "react";
 import Image from "next/image";
 import Swal from "sweetalert2";
+import { useRouter } from "next/navigation";
 
 const Form = () => {
-  const { mutate, isLoading, isError, error } = useMutation(
-    "sendPet",
-    SendPet
-  );
+  const { data, mutate, isLoading, error } = useMutation("sendPet", SendPet);
   const [images, setImages] = useState<File[]>([]);
+  const router = useRouter();
 
   return (
     <Formik
@@ -25,7 +24,7 @@ const Form = () => {
         urls_images: [],
         description: "",
       }}
-      onSubmit={(values, {resetForm}) => {
+      onSubmit={(values, { resetForm, setFieldValue }) => {
         const formData = new FormData();
         formData.append("name", values.name);
         formData.append("birth_date", values.birth_date);
@@ -38,25 +37,31 @@ const Form = () => {
 
         mutate(formData);
 
-        resetForm();
-        if (!isError) {
+        if (data) {
           Swal.fire({
             icon: "success",
             title: "¡Éxito!",
             text: "La mascota se ha creado correctamente.",
-          });
-        } 
-        else {
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Ha ocurrido un error al crear la mascota. Por favor, intenta de nuevo.",
+            timer: 4000,
+            timerProgressBar: true,
+            showConfirmButton: false,
+          }).then(() => {
+            router.push("/catalogo");
           });
         }
+
       }}
       validationSchema={validationSchema}
     >
-      {({ values, handleChange, handleBlur, handleSubmit, errors, touched }) => (
+      {({
+        values,
+        handleChange,
+        handleBlur,
+        handleSubmit,
+        errors,
+        touched,
+        setFieldValue,
+      }) => (
         <form
           className="p-5 border w-96 mx-auto rounded-lg bg-white shadow-lg"
           onSubmit={handleSubmit}
@@ -71,7 +76,7 @@ const Form = () => {
               value={values.name}
               onChange={handleChange}
               onBlur={handleBlur}
-              className="w-full p-2 border rounded-lg focus:border-olivine-700 focus:outline-none"
+              className="border border-olivine-700 w-full rounded-md"
             />
             {touched.name && errors.name && (
               <div className="text-red-700 font-semibold">{errors.name}</div>
@@ -87,7 +92,7 @@ const Form = () => {
               value={values.birth_date}
               onChange={handleChange}
               onBlur={handleBlur}
-              className="w-4/5 p-2 border rounded-lg focus:border-olivine-700 focus:outline-none"
+              className="border border-olivine-700 w-full rounded-md"
             />
             {touched.birth_date && errors.birth_date && (
               <div className="text-red-700 font-semibold">
@@ -99,14 +104,17 @@ const Form = () => {
             <label htmlFor="especie" className="p-2 flex items-center">
               Especie
             </label>
-            <input
+            <select
               id="especie"
-              type="text"
               value={values.especie}
               onChange={handleChange}
               onBlur={handleBlur}
-              className="w-full p-2 border rounded-lg focus:border-olivine-700 focus:outline-none"
-            />
+              className="border border-olivine-700 w-full rounded-md"
+            >
+              <option value="">Selecciona una especie</option>
+              <option value="perro">Perro</option>
+              <option value="gato">Gato</option>
+            </select>
             {touched.especie && errors.especie && (
               <div className="text-red-700 font-semibold">{errors.especie}</div>
             )}
@@ -121,7 +129,7 @@ const Form = () => {
               value={values.breed}
               onChange={handleChange}
               onBlur={handleBlur}
-              className="w-full p-2 border rounded-lg focus:border-olivine-700 focus:outline-none"
+              className="border border-olivine-700 focus:border-olivine-600 w-full rounded-md"
             />
             {touched.breed && errors.breed && (
               <div className="text-red-700 font-semibold">{errors.breed}</div>
@@ -138,11 +146,12 @@ const Form = () => {
               onChange={(event) => {
                 const selectedFiles = Array.from(event.target.files) as File[];
                 setImages(selectedFiles);
+                setFieldValue("urls_images", selectedFiles);
               }}
               onBlur={handleBlur}
-              className="w-full p-2 rounded-lg focus:border-olivine-700 focus:outline-none"
+              className="form-input border border-olivine-700 focus:border-olivine-600 m-0 p-0 h-10 w-full rounded-md file:h-full file:bg-olivine-700 file:text-white file:border-none"
             />
-            <div className="flex flex-row gap-2 justify-center">
+            <div className="flex flex-row gap-2 justify-center mt-2">
               {images &&
                 images.map(
                   (image, index) =>
@@ -158,7 +167,7 @@ const Form = () => {
                     )
                 )}
             </div>
-            {errors.urls_images && (
+            {touched.urls_images && errors.urls_images && (
               <div className="text-red-700 font-semibold">
                 {errors.urls_images}
               </div>
@@ -173,7 +182,7 @@ const Form = () => {
               value={values.description}
               onChange={handleChange}
               onBlur={handleBlur}
-              className="w-full p-2 border rounded-lg focus:border-olivine-700 focus:outline-none"
+              className="border border-olivine-700 w-full rounded-md"
             />
             {touched.description && errors.description && (
               <div className="text-red-700 font-semibold">

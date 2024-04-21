@@ -16,21 +16,23 @@ import { PetsAPIResponse } from "@types/types";
  * @param {void}
  * @returns {Promise<PetsAPIResponse>}
  * @description Esta función se encarga de realizar la petición para obtener a todas las mascotas.
-*/
+ */
 
-const fetchPets : QueryFunction <PetsAPIResponse,  ["pets"] > = async () => {
-    try {
-        const apiRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/mascotas/`)
+const fetchPets: QueryFunction<PetsAPIResponse, ["pets"]> = async () => {
+  try {
+    const apiRes = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/mascotas/`
+    );
 
-        if (!apiRes.ok) {
-            throw new Error(`Error fetching /mascotas: ${apiRes.statusText}`);
-        }
-    
-        return apiRes.json();
-    } catch (error) {
-        console.error("Error en fetchPets:", error);
-        throw error;
+    if (!apiRes.ok) {
+      throw new Error(`Error fetching /mascotas: ${apiRes.statusText}`);
     }
-}
+
+    return apiRes.json();
+  } catch (error) {
+    console.error("Error en fetchPets:", error);
+    throw error;
+  }
+};
 
 export default fetchPets;

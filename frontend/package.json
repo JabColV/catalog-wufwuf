@@ -7,16 +7,15 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "format": "prettier --write \"components/**/*.{js,jsx,ts,tsx}\" \"app/**/*.{js,jsx,ts,tsx}\"  \"types/**/*.{js,jsx,ts,tsx}\""
+    "format": "prettier --write \"components/**/*.{js,jsx,ts,tsx}\" \"api/**/*.{js,jsx,ts,tsx}\" \"app/**/*.{js,jsx,ts,tsx}\"  \"types/**/*.{js,jsx,ts,tsx}\" \"utils/**/*.{js,jsx,ts,tsx}\""
   },
   "dependencies": {
-    "@tanstack/react-query": "^4.10.1",
+    "@tailwindcss/forms": "^0.5.7",
     "formik": "^2.4.5",
     "next": "14.1.4",
     "react": "^18",
     "react-dom": "^18",
     "react-query": "^3.39.3",
-    "sweetalert": "^2.1.2",
     "sweetalert2": "^11.10.8",
     "yup": "^1.4.0"
   },

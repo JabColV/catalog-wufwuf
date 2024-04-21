@@ -8,10 +8,25 @@ import { Animal, ParamsProps } from "@types/types";
 import fetchPet from "@api/get_pet";
 import { useQuery } from "react-query";
 import { calcularEtapaVida } from "@utils/functions";
+import Error from "@components/Error";
+import Loader from "@components/Loader";
 
 const AnimalDetails = ({ params }: ParamsProps) => {
   const [showModal, setShowModal] = useState(false);
-  const { data, status } = useQuery<Animal>(["pet", params.id], fetchPet);
+  const { data, status, isLoading, isError } = useQuery<Animal>(
+    ["pet", params.id],
+    fetchPet
+  );
+
+  if (isLoading) {
+    // Si isLoading es true, se está cargando la consulta, muestra un indicador de carga o cualquier otro componente de carga que desees
+    return <Loader />;
+  }
+
+  if (isError) {
+    // Si isError es true, hubo un error en la consulta, muestra un componente de error
+    return <Error />;
+  }
 
   let animal: Animal | undefined;
   if (status === "success") {

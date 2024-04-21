@@ -21,10 +21,11 @@ const config: Config = {
           '800': '#3c4f25',
           '900': '#344423',
           '950': '#19240f',
+          'fondo': '#668A4c'
         }, 
       }
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/forms")],
 };
 export default config;
