@@ -1,11 +1,12 @@
 "use client";
 
+import { AnimalGalleryProps } from "@types/types";
 import Image from "next/image";
 import { useState } from "react";
 
 const AnimalGallery = ({ animal_info }: AnimalGalleryProps) => {
-  const { name, images } = animal_info;
-  const [selectedImage, setSelectedImage] = useState(images[0]);
+  const { name, urls_images } = animal_info;
+  const [selectedImage, setSelectedImage] = useState(urls_images[0]);
 
   return (
     <div className="w-full grid grid-cols-1 space-y-5 gap-x-11 sm:grid-cols-2">
@@ -19,7 +20,7 @@ const AnimalGallery = ({ animal_info }: AnimalGalleryProps) => {
         />
       </div>
       <div className="w-full grid grid-cols-2 gap-3 md:min-w-72 items-center">
-        {images.map((image, index) => (
+        {urls_images.map((image, index) => (
           <div
             key={index}
             className="w-24 h-24 cursor-pointer border relative rounded-full overflow-hidden shadow-lg lg:w-28 lg:h-28 xl:w-36 xl:h-36 transform transition-transform hover:scale-110"

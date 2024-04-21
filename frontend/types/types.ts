@@ -7,21 +7,21 @@ interface CardProps {
 export type Animal = {
   id: number;
   name: string;
-  date_birth: Date;
+  birth_date: Date;
   especie: string;
   breed: string;
-  urls_images: string[];
+  urls_images: File[];
   description: string;
   creation_date: Date;
 };
 
-interface ParamsProps {
+export interface ParamsProps {
   params: {
     id: string;
   };
 }
 
-interface AnimalGalleryProps {
+export interface AnimalGalleryProps {
   animal_info: Animal;
 }
 

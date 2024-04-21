@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import "@css/globals.css";
 import { QueryClient, QueryClientProvider } from "react-query";
 
