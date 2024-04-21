@@ -28,6 +28,6 @@ export const validationSchema = Yup.object().shape({
       )
     )
     .min(1, "Debe incluir al menos una imagen")
-    .max(6, "Solo se permiten hasta 6 imágenes"),
+    .max(4, "Solo se permiten hasta 4 imágenes"),
   description: Yup.string().required("La descripción es requerida"),
 });
