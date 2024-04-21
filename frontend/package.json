@@ -16,6 +16,8 @@
     "react": "^18",
     "react-dom": "^18",
     "react-query": "^3.39.3",
+    "sweetalert": "^2.1.2",
+    "sweetalert2": "^11.10.8",
     "yup": "^1.4.0"
   },
   "devDependencies": {

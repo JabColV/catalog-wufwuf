@@ -8,30 +8,17 @@ export const calcularEtapaVida = (date_birth: Date): string => {
 
 
 export const validationSchema = Yup.object().shape({
-    name: Yup.string().required('Este campo es requerido'),
-    birth_date: Yup.string().required('Este campo es requerido'),
-    especie: Yup.string().required('Este campo es requerido'),
-    breed: Yup.string().required('Este campo es requerido'),
-    imagen_actual: Yup.string().required('Este campo es requerido'),
-    urls_images: Yup.array().of(Yup.string().required('Este campo es requerido')),
-    description: Yup.string().required('Este campo es requerido'),
+    name: Yup.string().required('El nombre es requerido'),
+    birth_date: Yup.string().required('La fecha de nacimiento es requerida'),
+    especie: Yup.string().required('La especie es requerida'),
+    breed: Yup.string().required('La raza es requerida'),
+    urls_images: Yup.array()
+    .of(Yup.mixed().required('El archivo es requerido'))
+    .min(1, 'Debe incluir al menos una imagen')
+    .max(6, 'Solo se permiten hasta 6 imágenes'),
+    description: Yup.string().required('La descripción es requerida'),
 });
 
-// export const fileToBase64 = (file: File): Promise<string> => {
-//   return new Promise((resolve, reject) => {
-//     const reader = new FileReader();
-//     reader.readAsDataURL(file);
-//     reader.onload = () => resolve(reader.result as string);
-//     reader.onerror = (error) => reject(error);
-//   });
-// };
 
 
-// export const fileToBase64 = (file) => {
-//   return new Promise((resolve, reject) => {
-//     const reader = new FileReader();
-//     reader.readAsDataURL(file);
-//     reader.onload = () => resolve(reader.result);
-//     reader.onerror = (error) => reject(error);
-//   });
-// };
+

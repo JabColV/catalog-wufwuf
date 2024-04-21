@@ -6,14 +6,14 @@ import { useMutation } from "react-query";
 import { validationSchema } from "@utils/functions";
 import { useState } from "react";
 import Image from "next/image";
+import Swal from "sweetalert2";
 
 const Form = () => {
-  const { mutate, status, isLoading, isError, error } = useMutation(
+  const { mutate, isLoading, isError, error } = useMutation(
     "sendPet",
     SendPet
   );
   const [images, setImages] = useState<File[]>([]);
-  const [url, setURL] = useState<string[]>([]);
 
   return (
     <Formik
@@ -25,7 +25,7 @@ const Form = () => {
         urls_images: [],
         description: "",
       }}
-    onSubmit={(values) => {
+      onSubmit={(values, {resetForm}) => {
         const formData = new FormData();
         formData.append("name", values.name);
         formData.append("birth_date", values.birth_date);
@@ -33,15 +33,32 @@ const Form = () => {
         formData.append("breed", values.breed);
         formData.append("description", values.description);
         images.forEach((image, index) => {
-            formData.append(`urls_images[${url.length + index}]`, image);
+          formData.append(`urls_images[${index}]`, image);
         });
+
         mutate(formData);
-    }}
-      //   validationSchema={validationSchema}
+
+        resetForm();
+        if (!isError) {
+          Swal.fire({
+            icon: "success",
+            title: "¡Éxito!",
+            text: "La mascota se ha creado correctamente.",
+          });
+        } 
+        else {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Ha ocurrido un error al crear la mascota. Por favor, intenta de nuevo.",
+          });
+        }
+      }}
+      validationSchema={validationSchema}
     >
-      {({ values, handleChange, handleBlur, handleSubmit }) => (
+      {({ values, handleChange, handleBlur, handleSubmit, errors, touched }) => (
         <form
-          className="p-5 border w-1/2 mx-auto rounded-lg"
+          className="p-5 border w-96 mx-auto rounded-lg bg-white shadow-lg"
           onSubmit={handleSubmit}
         >
           <div>
@@ -56,6 +73,9 @@ const Form = () => {
               onBlur={handleBlur}
               className="w-full p-2 border rounded-lg focus:border-olivine-700 focus:outline-none"
             />
+            {touched.name && errors.name && (
+              <div className="text-red-700 font-semibold">{errors.name}</div>
+            )}
           </div>
           <div>
             <label htmlFor="birth_date" className="p-2 flex items-center">
@@ -69,6 +89,11 @@ const Form = () => {
               onBlur={handleBlur}
               className="w-4/5 p-2 border rounded-lg focus:border-olivine-700 focus:outline-none"
             />
+            {touched.birth_date && errors.birth_date && (
+              <div className="text-red-700 font-semibold">
+                {errors.birth_date}
+              </div>
+            )}
           </div>
           <div>
             <label htmlFor="especie" className="p-2 flex items-center">
@@ -82,6 +107,9 @@ const Form = () => {
               onBlur={handleBlur}
               className="w-full p-2 border rounded-lg focus:border-olivine-700 focus:outline-none"
             />
+            {touched.especie && errors.especie && (
+              <div className="text-red-700 font-semibold">{errors.especie}</div>
+            )}
           </div>
           <div>
             <label htmlFor="breed" className="p-2 flex items-center">
@@ -95,6 +123,9 @@ const Form = () => {
               onBlur={handleBlur}
               className="w-full p-2 border rounded-lg focus:border-olivine-700 focus:outline-none"
             />
+            {touched.breed && errors.breed && (
+              <div className="text-red-700 font-semibold">{errors.breed}</div>
+            )}
           </div>
           <div>
             <label htmlFor="urls_images" className="p-2 flex items-center">
@@ -127,22 +158,31 @@ const Form = () => {
                     )
                 )}
             </div>
+            {errors.urls_images && (
+              <div className="text-red-700 font-semibold">
+                {errors.urls_images}
+              </div>
+            )}
           </div>
           <div>
             <label htmlFor="description" className="p-2 flex items-center">
               Descripcion
             </label>
-            <input
+            <textarea
               id="description"
-              type="text"
               value={values.description}
               onChange={handleChange}
               onBlur={handleBlur}
               className="w-full p-2 border rounded-lg focus:border-olivine-700 focus:outline-none"
             />
+            {touched.description && errors.description && (
+              <div className="text-red-700 font-semibold">
+                {errors.description}
+              </div>
+            )}
           </div>
           <button
-            className="w-full h-10 mt-4 rounded-lg bg-olivine-700"
+            className="w-full h-10 mt-4 rounded-lg bg-olivine-800 hover:bg-olivine-600 text-white font-semibold focus:outline-none"
             type="submit"
           >
             Enviar
