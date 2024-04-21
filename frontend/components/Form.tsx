@@ -10,7 +10,7 @@ import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 
 const Form = () => {
-  const { data, mutate, isLoading, error } = useMutation("sendPet", SendPet);
+  const { mutate, isLoading, isError } = useMutation("sendPet", SendPet);
   const [images, setImages] = useState<File[]>([]);
   const router = useRouter();
 
@@ -37,7 +37,8 @@ const Form = () => {
 
         mutate(formData);
 
-        if (data) {
+        console.log("values", isError);
+        if (!isError) {
           Swal.fire({
             icon: "success",
             title: "¡Éxito!",

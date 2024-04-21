@@ -13,7 +13,6 @@ const SendPet = async (pet: FormData) => {
     if (!apiRes.ok) {
       throw new Error(`Error fetching /mascotas/crear: ${apiRes.statusText}`);
     }
-    return apiRes.ok
 
   } catch (error) {
     Swal.fire({
