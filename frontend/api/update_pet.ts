@@ -1,9 +1,9 @@
 import Swal from "sweetalert2";
 
-const SendPet = async (pet: FormData) => {
+const UpdatePet = async (pet: FormData) => {
   try {
     const apiRes = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/mascotas/crear/`,
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/mascotas/actualizar/`,
       {
         method: "POST",
         body: pet,
@@ -21,4 +21,4 @@ const SendPet = async (pet: FormData) => {
   }
 };
 
-export default SendPet;
+export default UpdatePet;
