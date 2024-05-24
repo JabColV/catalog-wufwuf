@@ -34,7 +34,7 @@ const Form = () => {
           const url = await uploadFile("pets", image);
           imageUrls.push(url);
         }
-
+        console.log("imageUrls", imageUrls);
         const formData = new FormData();
         formData.append("name", values.name);
         formData.append("birth_date", values.birth_date);
@@ -42,6 +42,8 @@ const Form = () => {
         formData.append("breed", values.breed);
         formData.append("description", values.description);
         formData.append("urls_images", JSON.stringify(imageUrls));
+
+        console.log("formData", formData.values);
 
         mutate(formData);
 
@@ -151,8 +153,7 @@ const Form = () => {
               type="file"
               multiple
               onChange={(event) => {
-                const selectedFiles = Array.from(event.target.files) as File[];
-                console.log("selectedFiles", selectedFiles);
+                const selectedFiles = Array.from(event.target.files ?? []) as File[];
                 setImages(selectedFiles);
                 setFieldValue("urls_images", selectedFiles);
               }}

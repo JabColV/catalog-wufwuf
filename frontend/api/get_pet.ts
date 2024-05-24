@@ -8,7 +8,7 @@ const fetchPet: QueryFunction<Animal, ["pet", string]> = async ({
     const id = queryKey[1];
 
     const apiRes = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL_KUBERNETES}/api/mascotas/${id}`
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/mascotas/${id}`
     );
 
     if (!apiRes.ok) {

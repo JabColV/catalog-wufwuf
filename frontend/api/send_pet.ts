@@ -4,7 +4,7 @@ const SendPet = async (pet: FormData) => {
   try {
 
     const apiRes = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL_KUBERNETES}/api/mascotas/crear/`,
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/mascotas/crear/`,
       {
         method: "POST",
         body: pet,
