@@ -8,6 +8,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
+import { uploadFile } from "@firebase/config";
 
 const Form = () => {
   const { mutate, isLoading, isError } = useMutation("sendPet", SendPet);
@@ -24,20 +25,26 @@ const Form = () => {
         urls_images: [],
         description: "",
       }}
-      onSubmit={(values, { resetForm, setFieldValue }) => {
+      onSubmit={async (values, { resetForm, setFieldValue }) => {
+
+        const imageUrls : String[] = [];
+
+        // Subir todas las imágenes y obtener sus URLs
+        for (const image of images) {
+          const url = await uploadFile("pets", image);
+          imageUrls.push(url);
+        }
+
         const formData = new FormData();
         formData.append("name", values.name);
         formData.append("birth_date", values.birth_date);
         formData.append("especie", values.especie);
         formData.append("breed", values.breed);
         formData.append("description", values.description);
-        images.forEach((image, index) => {
-          formData.append(`urls_images[${index}]`, image);
-        });
+        formData.append("urls_images", JSON.stringify(imageUrls));
 
         mutate(formData);
 
-        console.log("values", isError);
         if (!isError) {
           Swal.fire({
             icon: "success",
@@ -50,7 +57,6 @@ const Form = () => {
             router.push("/catalogo");
           });
         }
-
       }}
       validationSchema={validationSchema}
     >
@@ -146,6 +152,7 @@ const Form = () => {
               multiple
               onChange={(event) => {
                 const selectedFiles = Array.from(event.target.files) as File[];
+                console.log("selectedFiles", selectedFiles);
                 setImages(selectedFiles);
                 setFieldValue("urls_images", selectedFiles);
               }}
