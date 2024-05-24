@@ -23,7 +23,21 @@ const Form = ({ accion, data }: { accion: string; data: any }) => {
     isError: updateError,
   } = useMutation("updatePet", UpdatePet);
   const [images, setImages] = useState<File[]>([]);
+  const [urlImages, setUrlImages] = useState<string[]>([]);
+  const [dataUrlImages, setDataUrlImages] = useState<string[]>(
+    data.urls_images
+  );
   const router = useRouter();
+
+  const handleImageLoad = (image: File, index: number) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(image);
+    reader.onload = () => {
+      const updatedUrls = [...urlImages];
+      updatedUrls[index] = reader.result as string;
+      setUrlImages(updatedUrls);
+    };
+  };
 
   const handleFormSubmit = async (values: any) => {
     const imageUrls: String[] = [];
@@ -172,22 +186,21 @@ const Form = ({ accion, data }: { accion: string; data: any }) => {
               onBlur={handleBlur}
               className="form-input border border-olivine-700 focus:border-olivine-600 m-0 p-0 h-10 w-full rounded-md file:h-full file:bg-olivine-700 file:text-white file:border-none"
             />
-            {values.urls_images && values.urls_images.length > 0 ? (
-              <div className="flex flex-row gap-2 justify-center mt-2">
-                {values.urls_images.map((imageUrl, index) => (
-                  <Image
-                    key={index}
-                    className="w-50 h-50 rounded-md object-cover"
-                    width={50}
-                    height={50}
-                    src={imageUrl}
-                    alt="imagen"
-                  />
-                ))}
-              </div>
-            ) : (
-              <div className="flex flex-row gap-2 justify-center mt-2">
-                {images &&
+            <div className="flex flex-row gap-2 justify-center mt-2">
+              {dataUrlImages.length > 0
+                ? // Si hay imágenes URL disponibles
+                  dataUrlImages.map((image, index) => (
+                    <Image
+                      key={index}
+                      className="w-50 h-50 rounded-md object-cover"
+                      width={50}
+                      height={50}
+                      src={image}
+                      alt="imagen de una mascota"
+                    />
+                  ))
+                : // Si no hay imágenes URL disponibles, mostramos las imágenes cargadas
+                  images &&
                   images.map(
                     (image, index) =>
                       index < 4 && (
@@ -201,9 +214,7 @@ const Form = ({ accion, data }: { accion: string; data: any }) => {
                         />
                       )
                   )}
-              </div>
-            )}
-
+            </div>
             {touched.urls_images && errors.urls_images && (
               <div className="text-red-700 font-semibold">
                 {errors.urls_images}
