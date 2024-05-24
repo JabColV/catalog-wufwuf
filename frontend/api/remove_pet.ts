@@ -1,16 +1,14 @@
 import Swal from "sweetalert2";
 
-const SendPet = async (pet: FormData) => {
+const removePet = async (id: number) => {
   try {
     const apiRes = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/mascotas/crear/`,
-      {
-        method: "POST",
-        body: pet,
-      }
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/mascotas/eliminar/${id}`
     );
     if (!apiRes.ok) {
-      throw new Error(`Error fetching /mascotas/crear: ${apiRes.statusText}`);
+      throw new Error(
+        `Error fetching /mascotas/eliminar: ${apiRes.statusText}`
+      );
     }
   } catch (error) {
     Swal.fire({
@@ -21,4 +19,4 @@ const SendPet = async (pet: FormData) => {
   }
 };
 
-export default SendPet;
+export default removePet;

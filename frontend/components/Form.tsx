@@ -9,57 +9,67 @@ import Image from "next/image";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 import { uploadFile } from "@firebase/config";
+import UpdatePet from "@api/update_pet";
 
-const Form = () => {
-  const { mutate, isLoading, isError } = useMutation("sendPet", SendPet);
+const Form = ({ accion, data }: { accion: string; data: any }) => {
+  const {
+    mutate: createMutation,
+    isLoading: createLoading,
+    isError: createError,
+  } = useMutation("createPet", SendPet);
+  const {
+    mutate: updateMutation,
+    isLoading: updateLoading,
+    isError: updateError,
+  } = useMutation("updatePet", UpdatePet);
   const [images, setImages] = useState<File[]>([]);
   const router = useRouter();
 
+  const handleFormSubmit = async (values: any) => {
+    const imageUrls: String[] = [];
+
+    // Subir todas las imágenes y obtener sus URLs
+    for (const image of images) {
+      const url = await uploadFile("pets", image);
+      imageUrls.push(url);
+    }
+
+    const formData = new FormData();
+    formData.append("name", values.name);
+    formData.append("birth_date", values.birth_date);
+    formData.append("especie", values.especie);
+    formData.append("breed", values.breed);
+    formData.append("urls_images", JSON.stringify(imageUrls));
+    formData.append("description", values.description);
+
+    try {
+      if (accion === "update") {
+        await updateMutation(formData);
+      } else {
+        await createMutation(formData);
+      }
+      Swal.fire({
+        icon: "success",
+        title: "¡Éxito!",
+        text: `La mascota se ha ${
+          accion === "update" ? "actualizado" : "creado"
+        } correctamente.`,
+        timer: 4000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+      }).then(() => {
+        router.push("/catalogo");
+      });
+    } catch (error) {
+      console.error("Error:", error);
+      // Manejo de errores
+    }
+  };
+
   return (
     <Formik
-      initialValues={{
-        name: "",
-        birth_date: "",
-        especie: "",
-        breed: "",
-        urls_images: [],
-        description: "",
-      }}
-      onSubmit={async (values, { resetForm, setFieldValue }) => {
-
-        const imageUrls : String[] = [];
-
-        // Subir todas las imágenes y obtener sus URLs
-        for (const image of images) {
-          const url = await uploadFile("pets", image);
-          imageUrls.push(url);
-        }
-        console.log("imageUrls", imageUrls);
-        const formData = new FormData();
-        formData.append("name", values.name);
-        formData.append("birth_date", values.birth_date);
-        formData.append("especie", values.especie);
-        formData.append("breed", values.breed);
-        formData.append("description", values.description);
-        formData.append("urls_images", JSON.stringify(imageUrls));
-
-        console.log("formData", formData.values);
-
-        mutate(formData);
-
-        if (!isError) {
-          Swal.fire({
-            icon: "success",
-            title: "¡Éxito!",
-            text: "La mascota se ha creado correctamente.",
-            timer: 4000,
-            timerProgressBar: true,
-            showConfirmButton: false,
-          }).then(() => {
-            router.push("/catalogo");
-          });
-        }
-      }}
+      initialValues={data}
+      onSubmit={handleFormSubmit}
       validationSchema={validationSchema}
     >
       {({
@@ -153,29 +163,47 @@ const Form = () => {
               type="file"
               multiple
               onChange={(event) => {
-                const selectedFiles = Array.from(event.target.files ?? []) as File[];
+                const selectedFiles = Array.from(
+                  event.target.files ?? []
+                ) as File[];
                 setImages(selectedFiles);
                 setFieldValue("urls_images", selectedFiles);
               }}
               onBlur={handleBlur}
               className="form-input border border-olivine-700 focus:border-olivine-600 m-0 p-0 h-10 w-full rounded-md file:h-full file:bg-olivine-700 file:text-white file:border-none"
             />
-            <div className="flex flex-row gap-2 justify-center mt-2">
-              {images &&
-                images.map(
-                  (image, index) =>
-                    index < 4 && (
-                      <Image
-                        key={index}
-                        className="w-50 h-50 rounded-md object-cover"
-                        width={50}
-                        height={50}
-                        src={URL.createObjectURL(image)}
-                        alt="imagen"
-                      />
-                    )
-                )}
-            </div>
+            {values.urls_images && values.urls_images.length > 0 ? (
+              <div className="flex flex-row gap-2 justify-center mt-2">
+                {values.urls_images.map((imageUrl, index) => (
+                  <Image
+                    key={index}
+                    className="w-50 h-50 rounded-md object-cover"
+                    width={50}
+                    height={50}
+                    src={imageUrl}
+                    alt="imagen"
+                  />
+                ))}
+              </div>
+            ) : (
+              <div className="flex flex-row gap-2 justify-center mt-2">
+                {images &&
+                  images.map(
+                    (image, index) =>
+                      index < 4 && (
+                        <Image
+                          key={index}
+                          className="w-50 h-50 rounded-md object-cover"
+                          width={50}
+                          height={50}
+                          src={URL.createObjectURL(image)}
+                          alt="imagen"
+                        />
+                      )
+                  )}
+              </div>
+            )}
+
             {touched.urls_images && errors.urls_images && (
               <div className="text-red-700 font-semibold">
                 {errors.urls_images}
@@ -212,25 +240,3 @@ const Form = () => {
 };
 
 export default Form;
-// {
-//     "name": "Max",
-//     "birth_date": "2008-2-01",
-//     "especie": "Perro",
-//     "breed": "Pastor alemán",
-//     "urls_images": ["http://127.0.0.1:8000/static/dog1-0.jpg","http://127.0.0.1:8000/static/dog1-1.jpg","http://127.0.0.1:8000/static/dog1-2.jpg"],
-//     "description": "Max es un pastor alemán cariñoso y juguetón. Tiene un pelaje hermoso y una mirada amigable que ilumina cualquier habitación. Le encanta correr por el parque y jugar con su pelota favorita. Es un compañero leal que siempre está listo para aventuras emocionantes."
-// }
-
-// import { Formik } from 'formik';
-
-// const Form = ({ initialValues, onSubmit, validationSchema, children }) => {
-//   return (
-//     <Formik
-//       initialValues={initialValues}
-//       onSubmit={onSubmit}
-//       validationSchema={validationSchema}
-//     >
-//       {children}
-//     </Formik>
-//   );
-// };
