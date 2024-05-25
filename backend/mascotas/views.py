@@ -46,3 +46,23 @@ def get_pet(request, pk):
         return Response(status=status.HTTP_404_NOT_FOUND)
     serializer = MascotaSerializer(mascota)
     return Response(serializer.data)
+
+@api_view(['PUT'])
+def update_pet(request, pk):
+    try:
+        mascota = Mascota.objects.get(pk=pk)
+    except Mascota.DoesNotExist:
+        return Response({'error': 'Mascota no encontrada'}, status=status.HTTP_404_NOT_FOUND)
+
+    # Convertir el cuerpo de la solicitud en un objeto Python
+    request_data = json.loads(request.body)
+    # Crear una instancia del serializador con la mascota existente y los datos modificados
+    serializer = MascotaSerializer(mascota, data=request_data, partial=True)  # partial=True permite actualizar solo algunos campos
+
+    # Verificar si los datos son válidos
+    if serializer.is_valid():
+        # Guardar los datos actualizados en la base de datos
+        serializer.save()
+        return JsonResponse({'message': 'Mascota actualizada exitosamente'}, status=status.HTTP_200_OK)
+
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
