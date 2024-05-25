@@ -9,7 +9,18 @@ from django.http import JsonResponse
 
 @api_view(['GET'])
 def mascota_list(request):
+    #Obtener los parametros de consulta
+    especie= request.GET.get('especie')
+    breed = request.GET.get('breed')
+    # Filtrar las mascotas según los parámetros de consulta	
     mascotas = Mascota.objects.all()
+    
+    if especie:
+        mascotas = mascotas.filter(especie=especie)
+    if breed:
+        mascotas = mascotas.filter(breed=breed)
+
+
     serializer = MascotaSerializer(mascotas, many=True)
     return Response(serializer.data)
 
