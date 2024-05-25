@@ -14,6 +14,7 @@ class Mascota(models.Model):
     ) # Campo para almacenar varias URLs de imagenes
     description = models.TextField(default='Sin descripción')
     creation_date = models.DateTimeField(auto_now_add=True)
+    adopted = models.BooleanField(default=False) #Campo para indicar si la mascota esta adoptada
 
     def __str__(self):
         return self.name

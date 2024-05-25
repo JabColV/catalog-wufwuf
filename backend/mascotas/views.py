@@ -12,8 +12,9 @@ def mascota_list(request):
     #Obtener los parametros de consulta
     especie= request.GET.get('especie')
     breed = request.GET.get('breed')
-    # Filtrar las mascotas según los parámetros de consulta	
-    mascotas = Mascota.objects.all()
+
+    #Filtrar las mascotas que no han sido adoptadas
+    mascotas = Mascota.objects.filter(adopted=False)
     
     if especie:
         mascotas = mascotas.filter(especie=especie)
