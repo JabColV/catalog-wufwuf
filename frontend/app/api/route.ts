@@ -13,7 +13,7 @@ import { NextResponse } from "next/server";
 export async function GET(res: NextApiResponse, req: NextApiRequest) {
   try {
     const apiRes = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL_KUBERNETES}/api/mascotas/`
+      `${process.env.NEXT_PUBLIC_BACKEND_ISOLATED_URL_KUBERNETES}/api/mascotas/`
     );
 
     if (!apiRes.ok) {
