@@ -13,8 +13,11 @@ export async function GET(req: NextApiRequest, { params }: { params: ParamsProps
     }
 
     const apiRes = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_ISOLATED_URL_KUBERNETES}/api/mascotas/${getId}`
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/mascotas/${getId}`
     );
+    // const apiRes = await fetch(
+    //   `${process.env.NEXT_PUBLIC_BACKEND_ISOLATED_URL_KUBERNETES}/api/mascotas/${getId}`
+    // );
 
     if (!apiRes.ok) {
       throw new Error(`Error fetching /mascotas: ${apiRes.statusText}`);

@@ -10,11 +10,14 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { NextResponse } from "next/server";
 
-export async function GET(res: NextApiResponse, req: NextApiRequest) {
+export async function GET(req, res) {
   try {
     const apiRes = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_ISOLATED_URL_KUBERNETES}/api/mascotas/`
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/mascotas/`
     );
+    // const apiRes = await fetch(
+    //   `${process.env.NEXT_PUBLIC_BACKEND_ISOLATED_URL_KUBERNETES}/api/mascotas/`
+    // );
 
     if (!apiRes.ok) {
       throw new Error(`Error fetching /mascotas: ${apiRes.statusText}`);
@@ -24,7 +27,7 @@ export async function GET(res: NextApiResponse, req: NextApiRequest) {
     const data = await apiRes.json();
 
     // Enviar las mascotas como respuesta
-    return NextResponse.json({data});
+    return Response.json({data});
 
   } catch (error) {
     console.error("Error al obtener las mascotas:", error);

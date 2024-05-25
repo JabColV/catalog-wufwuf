@@ -35,20 +35,22 @@ const Form = ({ accion, data }: { accion: string; data: any }) => {
       imageUrls.push(url);
     }
 
-    const formData = new FormData();
-    formData.append("name", values.name);
-    formData.append("birth_date", values.birth_date);
-    formData.append("especie", values.especie);
-    formData.append("breed", values.breed);
-    formData.append("urls_images", JSON.stringify(imageUrls));
-    formData.append("description", values.description);
+    const petData = {
+      name: values.name,
+      birth_date: values.birth_date,
+      especie: values.especie,
+      breed: values.breed,
+      urls_images: imageUrls,
+      description: values.description
+    };
 
     try {
       if (accion === "update") {
-        await updateMutation(formData);
+        //await updateMutation(petData);
       } else {
-        await createMutation(formData);
+        await createMutation(petData);
       }
+      if (!createError) {
       Swal.fire({
         icon: "success",
         title: "¡Éxito!",
@@ -61,11 +63,13 @@ const Form = ({ accion, data }: { accion: string; data: any }) => {
       }).then(() => {
         router.push("/catalogo");
       });
+    }
     } catch (error) {
       console.error("Error:", error);
       // Manejo de errores
     }
   };
+
 
   return (
     <Formik

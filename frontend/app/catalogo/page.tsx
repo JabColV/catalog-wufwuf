@@ -11,7 +11,7 @@ import fetchPets from "@api/get_all_pets";
 
 const Catalogo = () => {
   const { data, status, isLoading, refetch } = useQuery<PetsAPIResponse>(
-    "pets",
+    "list_pets",
     fetchPets
   );
   let animals: PetsAPIResponse | undefined;
@@ -28,6 +28,7 @@ const Catalogo = () => {
   if (status === "success") {
     // Solo asigna `data` a `animals` si el estado de la consulta es exitoso (`success`)
     animals = data as PetsAPIResponse;
+    console.log("ANIMALES:", animals);
   }
 
   return (
