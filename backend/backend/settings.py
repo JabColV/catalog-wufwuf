@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-9b=9e_rhtc%k35@s@s*wmo&2ms2d8!t+nulc86ymq86)m)oe_&
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["localhost","localhost:8000","catalog-back-service","catalog-back-service:8000","192.168.59.100","192.168.59.100:30002", "catalog-front-service","catalog-front-service:30001"]
 
 
 # Application definition
@@ -127,9 +127,16 @@ STATIC_URL = 'static/'
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
+    "http://192.168.59.100:30001",
+    "http://192.168.59.100:30002",
+    "http://catalog-back-service:8000",
+    "http://catalog-front-service",
+    "http://catalog-front-service:30001",
 ]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
