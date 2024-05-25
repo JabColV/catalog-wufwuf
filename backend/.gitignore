@@ -1,2 +1,4 @@
 /myenv/
 /__pycache__/
+/backend/backend/__pycache__/
+/backend/mascotas/__pycache__/
