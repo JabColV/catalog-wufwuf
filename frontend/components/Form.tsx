@@ -1,6 +1,5 @@
 "use client";
 
-import SendPet from "@api/send_pet";
 import { Formik } from "formik";
 import { useMutation } from "react-query";
 import { validationSchema } from "@utils/functions";
@@ -9,7 +8,8 @@ import Image from "next/image";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 import { uploadFile } from "@firebase/config";
-import UpdatePet from "@api/update_pet";
+import UpdatePet from "@app/api/update_pet/update_pet";
+import SendPet from "@api/send_pet";
 
 const Form = ({ accion, data }: { accion: string; data: any }) => {
   const {
@@ -23,21 +23,8 @@ const Form = ({ accion, data }: { accion: string; data: any }) => {
     isError: updateError,
   } = useMutation("updatePet", UpdatePet);
   const [images, setImages] = useState<File[]>([]);
-  const [urlImages, setUrlImages] = useState<string[]>([]);
-  const [dataUrlImages, setDataUrlImages] = useState<string[]>(
-    data.urls_images
-  );
+  const dataUrlImages = data.urls_images;
   const router = useRouter();
-
-  const handleImageLoad = (image: File, index: number) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(image);
-    reader.onload = () => {
-      const updatedUrls = [...urlImages];
-      updatedUrls[index] = reader.result as string;
-      setUrlImages(updatedUrls);
-    };
-  };
 
   const handleFormSubmit = async (values: any) => {
     const imageUrls: String[] = [];

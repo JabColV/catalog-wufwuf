@@ -1,6 +1,6 @@
 "use client";
 
-import fetchPet from "@api/get_pet";
+import fetchPet from "@app/api/[id]/route";
 import Error from "@components/Error";
 import Form from "@components/Form";
 import Loader from "@components/Loader";

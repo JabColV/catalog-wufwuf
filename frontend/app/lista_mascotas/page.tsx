@@ -1,6 +1,6 @@
 "use client";
 
-import fetchPets from "@api/get_pets";
+import fetchPets from "@api_/get_pets";
 import DataTablePets from "@components/DataTablePets";
 import Loader from "@components/Loader";
 import { PetsAPIResponse } from "@types/types";

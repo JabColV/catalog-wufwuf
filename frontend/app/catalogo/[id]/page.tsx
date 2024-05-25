@@ -5,11 +5,11 @@ import Image from "next/image";
 import { useState } from "react";
 import Modal from "@components/Modal";
 import { Animal, ParamsProps } from "@types/types";
-import fetchPet from "@api/get_pet";
 import { useQuery } from "react-query";
 import { calcularEtapaVida } from "@utils/functions";
 import Error from "@components/Error";
 import Loader from "@components/Loader";
+import fetchPet from "@api/get_pet";
 
 const AnimalDetails = ({ params }: ParamsProps) => {
   const [showModal, setShowModal] = useState(false);

@@ -3,7 +3,7 @@ import Swal from "sweetalert2";
 const SendPet = async (pet: FormData) => {
   try {
     const apiRes = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/mascotas/crear/`,
+      `http://localhost:3000/api/create_pet/`,
       {
         method: "POST",
         body: pet,
@@ -12,6 +12,7 @@ const SendPet = async (pet: FormData) => {
     if (!apiRes.ok) {
       throw new Error(`Error fetching /mascotas/crear: ${apiRes.statusText}`);
     }
+
   } catch (error) {
     Swal.fire({
       icon: "error",
