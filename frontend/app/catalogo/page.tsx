@@ -3,15 +3,15 @@
 import Card from "@components/Card";
 import Link from "next/link";
 import { PetsAPIResponse, Animal } from "@types/types";
-import fetchPets from "@api/get_pets";
 import { useQuery } from "react-query";
 import { calcularEtapaVida } from "@utils/functions";
 import Loader from "@components/Loader";
 import { useEffect } from "react";
+import fetchPets from "@api/get_all_pets";
 
 const Catalogo = () => {
   const { data, status, isLoading, refetch } = useQuery<PetsAPIResponse>(
-    "pets",
+    "list_pets",
     fetchPets
   );
   let animals: PetsAPIResponse | undefined;
@@ -28,6 +28,7 @@ const Catalogo = () => {
   if (status === "success") {
     // Solo asigna `data` a `animals` si el estado de la consulta es exitoso (`success`)
     animals = data as PetsAPIResponse;
+    console.log("ANIMALES:", animals);
   }
 
   return (

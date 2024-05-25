@@ -6,7 +6,6 @@ import { PetsAPIResponse } from "@types/types";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
-import removePet from "@api/remove_pet";
 
 const DataTablePets = ({ pets }: { pets: PetsAPIResponse }) => {
   const router = useRouter();

@@ -3,7 +3,7 @@ import Swal from "sweetalert2";
 const removePet = async (id: number) => {
   try {
     const apiRes = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/mascotas/eliminar/${id}`
+      `${process.env.NEXT_PUBLIC_BACKEND_URL_KUBERNETES}/api/mascotas/eliminar/${id}`
     );
     if (!apiRes.ok) {
       throw new Error(
