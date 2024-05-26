@@ -10,19 +10,22 @@ import { useEffect, useState } from "react";
 import fetchPets from "@api/get_all_pets";
 
 const Catalogo = () => {
+
   const [breed, setBreed] = useState<string>("");
   const [especie, setEspecie] = useState<string>("");
   const [etapa, setEtapa] = useState<string>("");
 
   const { data, status, isLoading, refetch } = useQuery<PetsAPIResponse>(
-    "pets",
+    ["pets", { breed, especie }],
     fetchPets
   );
+
+  // const { mutate: updateMutation, isLoading: updateLoading, } = useMutation((data) => UpdatePet(data, id));
   let animals: PetsAPIResponse | undefined;
 
-  useEffect(() => {
-    refetch();
-  }, []);
+  // useEffect(() => {
+  //   refetch();
+  // }, []);
 
   if (isLoading) {
     // Si isLoading es true, se está cargando la consulta, muestra un indicador de carga o cualquier otro componente de carga que desees
@@ -80,9 +83,6 @@ const Catalogo = () => {
           <option value="adulto">Adulto</option>
           <option value="senior">Senior</option>
         </select>
-        <button onClick={handleFilterChange} className="p-2 bg-olivine-800 text-white rounded">
-          Aplicar filtros
-        </button>
       </div>
       <div className="w-4/5 flex flex-wrap justify-center mx-auto gap-3 mb-7">
         {animals &&
