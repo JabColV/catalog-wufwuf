@@ -68,20 +68,24 @@ def mascota_list_admin(request):
     serializer = MascotaSerializer(mascotas, many=True)
     return Response(serializer.data)
 
-@api_view(['GET'])
+@api_view(['POST'])
 def mascota_list(request):
-    #Obtener los parametros de consulta
-    especie= request.GET.get('especie')
-    breed = request.GET.get('breed')
-
-    #Filtrar las mascotas que no han sido adoptadas
-    mascotas = Mascota.objects.filter(adopted=False)
+    # Extraer datos del cuerpo de la solicitud JSON
+    try:
+        data = json.loads(request.body)
+    except json.JSONDecodeError:
+        return Response({'error': 'Invalid JSON'}, status=status.HTTP_400_BAD_REQUEST)
     
+    especie = data.get('especie')
+    breed = data.get('breed')
+
+    # Filtrar las mascotas que no han sido adoptadas
+    mascotas = Mascota.objects.filter(adopted=False)
+
     if especie:
         mascotas = mascotas.filter(especie=especie)
     if breed:
         mascotas = mascotas.filter(breed=breed)
-
 
     serializer = MascotaSerializer(mascotas, many=True)
     return Response(serializer.data)
