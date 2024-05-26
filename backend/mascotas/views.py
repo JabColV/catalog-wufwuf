@@ -65,7 +65,7 @@ def mascota_list(request):
     if breed:
         mascotas = mascotas.filter(breed=breed)
 
-
+    print(mascotas)
     serializer = MascotaSerializer(mascotas, many=True)
     return Response(serializer.data)
 
