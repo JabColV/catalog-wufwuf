@@ -7,6 +7,20 @@ from django.http import JsonResponse
 import json
 from datetime import date
 
+#Change the adopted status of a pet
+@api_view(['PATCH'])
+def toggle_adoption(request, pk):
+    try:
+        # Get the pet from the database
+        mascota = Mascota.objects.get(pk=pk)
+    except Mascota.DoesNotExist:
+        return Response({'error': 'Mascota no encontrada'}, status=status.HTTP_404_NOT_FOUND)
+    # Change the adopted status of the pet
+    mascota.adopted = not mascota.adopted
+    # Save the changes in the database
+    mascota.save()
+    return Response({'id': mascota.id, 'name':mascota.name, 'adopted': mascota.adopted}, status=status.HTTP_200_OK)
+
 # Calculate the age of the pet in years
 def calculate_age(birth_date):
     today = date.today()
