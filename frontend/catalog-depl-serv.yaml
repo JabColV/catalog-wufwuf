@@ -36,19 +36,4 @@ spec:
       targetPort: 3000 # Port on the pods to which traffic will be forwarded
       nodePort: 30001 # Optional: Port exposed externally on each node
 
-# apiVersion: catalog_front/v1
-# kind: Service
-# metadata:
-#   name: catalog-front-service
-#   labels:
-#     name: catalog-front-service
-# spec:
-#   type: NodePort
-#   selector:
-#     name: catalog-front-pod
-#   ports:
-#     - port:
-#         3001 # Especifica el puerto en el que el servicio estará disponible
-#         # internamente dentro del clúster. En este caso, el servicio estará disponible internamente en el puerto 8081.
-#       targetPort: 3000 # pod's port because of the following -> CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
-#       nodePort: 30001 # External port
+
