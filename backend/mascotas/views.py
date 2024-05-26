@@ -5,6 +5,51 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 from django.http import JsonResponse
 import json
+from datetime import date
+
+#Change the adopted status of a pet
+@api_view(['PATCH'])
+def toggle_adoption(request, pk):
+    try:
+        # Get the pet from the database
+        mascota = Mascota.objects.get(pk=pk)
+    except Mascota.DoesNotExist:
+        return Response({'error': 'Mascota no encontrada'}, status=status.HTTP_404_NOT_FOUND)
+    # Change the adopted status of the pet
+    mascota.adopted = not mascota.adopted
+    # Save the changes in the database
+    mascota.save()
+    return Response({'id': mascota.id, 'name':mascota.name, 'adopted': mascota.adopted}, status=status.HTTP_200_OK)
+
+# Calculate the age of the pet in years
+def calculate_age(birth_date):
+    today = date.today()
+    age = today.year - birth_date.year - ((today.month, today.day) < (birth_date.month, birth_date.day))
+    return age
+@api_view(['GET'])
+def filter_pet_by_age(request):
+
+    # Obtener los parametros de consulta
+    age_min = request.GET.get('age_min')
+    age_max = request.GET.get('age_max')
+
+    # Filtrar las mascotas que no han sido adoptadas
+    mascotas = Mascota.objects.filter(adopted=False)
+    mascotas_filtradas = []
+
+    for mascota in mascotas:
+        # Calcular la edad de la mascota en años
+        pet_age = calculate_age(mascota.birth_date)
+
+
+        # Verificar si la mascota está en el rango de edad especificado
+        if (age_min is None or int(age_min) <= pet_age) and (age_max is None or int(age_max) >= pet_age):
+            # Agregar la mascota a la lista filtrada
+            mascotas_filtradas.append(mascota)
+
+    # Serializar la lista de mascotas filtradas
+    serializer = MascotaSerializer(mascotas_filtradas, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 def mascota_list(request):
