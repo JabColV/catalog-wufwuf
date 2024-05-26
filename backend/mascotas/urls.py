@@ -1,8 +1,9 @@
 from django.urls import path
-from .views import mascota_list, create_pet, get_pet, update_pet,filter_pet_by_age,toggle_adoption
+from .views import mascota_list, mascota_list_admin, create_pet, get_pet, update_pet,filter_pet_by_age,toggle_adoption
 
 urlpatterns = [
     path('mascotas/', mascota_list, name='mascota_list'),
+    path('mascotas/admin/', mascota_list_admin, name='mascota_list_admin'),
     path('mascotas/crear/', create_pet, name='create_pet'),
     path('mascotas/<int:pk>/', get_pet, name='get_pet'),
     path('mascotas/<int:pk>/actualizar/', update_pet, name='update_pet'),
