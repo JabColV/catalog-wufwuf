@@ -6,10 +6,14 @@ import { PetsAPIResponse, Animal } from "@types/types";
 import { useQuery } from "react-query";
 import { calcularEtapaVida } from "@utils/functions";
 import Loader from "@components/Loader";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import fetchPets from "@api/get_all_pets";
 
 const Catalogo = () => {
+  const [breed, setBreed] = useState<string>("");
+  const [especie, setEspecie] = useState<string>("");
+  const [etapa, setEtapa] = useState<string>("");
+
   const { data, status, isLoading, refetch } = useQuery<PetsAPIResponse>(
     "pets",
     fetchPets
@@ -31,11 +35,55 @@ const Catalogo = () => {
     console.log("ANIMALES:", animals);
   }
 
+  const handleFilterChange = () => {
+    refetch();
+  };
+
   return (
     <>
       <h1 className="text-4xl text-center mt-8 text-olivine-800 font-extrabold mb-9">
         Catálogo de animales
       </h1>
+      <div className="flex justify-center space-x-3 mb-3">
+        <select
+          value={breed}
+          onChange={(e) => setBreed(e.target.value)}
+          className="border border-gray-300 rounded-md p-1 w-64"
+        >
+          <option value="">Filtrar por raza</option>
+          <option value="Pastor alemán">Pastor alemán</option>
+          <option value="Bulldog francés">Bulldog francés</option>
+          <option value="Persa">Persa</option>
+          <option value="Siamés">Siamés</option>
+          <option value="Shih Tzu">Shih Tzu</option>
+          <option value="golden">golden</option>
+          <option value="Bengalí">Bengalí</option>
+          <option value="Maine Coon">Maine Coon</option>
+          <option value="Pitbull">Pitbull</option>
+        </select>
+        <select
+          value={especie}
+          onChange={(e) => setEspecie(e.target.value)}
+          className="border border-gray-300 rounded-md p-1 w-64"
+        >
+          <option value="">Filtrar por especie</option>
+          <option value="perro">Perro</option>
+          <option value="gato">Gato</option>
+        </select>
+        <select
+          value={etapa}
+          onChange={(e) => setEtapa(e.target.value)}
+          className="border border-gray-300 rounded-md p-1 w-64"
+        >
+          <option value="">Filtrar por etapa de vida</option>
+          <option value="cachorro">Cachorro</option>
+          <option value="adulto">Adulto</option>
+          <option value="senior">Senior</option>
+        </select>
+        <button onClick={handleFilterChange} className="p-2 bg-olivine-800 text-white rounded">
+          Aplicar filtros
+        </button>
+      </div>
       <div className="w-4/5 flex flex-wrap justify-center mx-auto gap-3 mb-7">
         {animals &&
           animals.map((animal: Animal) => (

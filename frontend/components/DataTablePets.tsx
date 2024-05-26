@@ -6,6 +6,8 @@ import { PetsAPIResponse } from "@types/types";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
+import { useMutation } from "react-query";
+import PatchAdoptionField from "@api/path_adopted";
 
 const DataTablePets = ({ pets }: { pets: PetsAPIResponse }) => {
   const router = useRouter();
@@ -51,7 +53,7 @@ const DataTablePets = ({ pets }: { pets: PetsAPIResponse }) => {
               height={30}
             />
           </button>
-          <button onClick={() => handleRemove(row)}>
+          <button onClick={() => handleAdopted(row)}>
             <Image
               className="transform scale-x-[-1]"
               src={"/assets/icons/pet_fingerprint.png"}
@@ -84,12 +86,13 @@ const DataTablePets = ({ pets }: { pets: PetsAPIResponse }) => {
     });
     setRecords(filteredRecords);
   };
+  const { mutate, isLoading, isError } = useMutation((pet_id) => PatchAdoptionField(pet_id));
 
   const handleEdit = (row) => {
     router.push(`/lista_mascotas/${row.identificador}`);
   };
 
-  const handleRemove = (row) => {
+  const handleAdopted = (row) => {
     console.log(row);
     Swal.fire({
       icon: "warning",
@@ -104,15 +107,17 @@ const DataTablePets = ({ pets }: { pets: PetsAPIResponse }) => {
       cancelButtonText: "Cancelar",
     }).then((result) => {
       if (result.isConfirmed) {
-        //removePet(row.identificador);
-        Swal.fire({
-          icon: "success",
-          title: "¡Éxito!",
-          text: "La mascota ha sido eliminada correctamente.",
-          timer: 4000,
-          timerProgressBar: true,
-          showConfirmButton: false,
-        });
+        mutate(row.identificador);
+        if (!isError){
+          Swal.fire({
+            icon: "success",
+            title: "¡Éxito!",
+            text: "La mascota ha sido eliminada correctamente.",
+            timer: 4000,
+            timerProgressBar: true,
+            showConfirmButton: false,
+          });
+        }
       }
     });
     
