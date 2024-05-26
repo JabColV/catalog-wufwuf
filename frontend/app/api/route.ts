@@ -25,6 +25,7 @@ export async function POST(req: Request) {
     //   },
     //   body: JSON.stringify({ breed, especie, age_min, age_max }),
     // });
+    console.log("Antes: ",req.body)
     const apiRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_ISOLATED_URL_KUBERNETES}/api/mascotas/`, {
       method: "POST",
       headers: {
@@ -32,6 +33,7 @@ export async function POST(req: Request) {
       },
       body: JSON.stringify({ breed, especie, age_min, age_max }),
     });
+    console.log("Después: ",req.body)
 
     if (!apiRes.ok) {
       throw new Error(`Error fetching /mascotas: ${apiRes.statusText}`);

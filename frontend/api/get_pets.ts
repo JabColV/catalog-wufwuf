@@ -22,18 +22,18 @@ const fetchPets: QueryFunction<PetsAPIResponse, ["pets", { breed?: string; espec
   const [key, filters] = queryKey;
 
   try {
-    console.log("Filters:", filters);
-    // const apiRes = await fetch(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/`, {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     "Cache-Control": "no-cache",
-    //     Pragma: "no-cache",
-    //     Expires: "0",
-    //   },
-    //   body: JSON.stringify(filters),
-    // });
-    const apiRes = await fetch(`${process.env.NEXT_PUBLIC_FRONTEND_URL_KUBERNETES}/api/`, {
+
+    // Crear un nuevo objeto solo con los filtros definidos
+    const definedFilters: { [key: string]: any } = {};
+    (Object.keys(filters) as Array<keyof typeof filters>).forEach((key) => {
+      if (filters[key] !== undefined) {
+        definedFilters[key] = filters[key];
+      }
+    });
+
+    console.log("definedFilters:", definedFilters);
+    // /service-pets/
+    const apiRes = await fetch(`/service-pets/api/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -41,7 +41,7 @@ const fetchPets: QueryFunction<PetsAPIResponse, ["pets", { breed?: string; espec
         Pragma: "no-cache",
         Expires: "0",
       },
-      body: JSON.stringify(filters),
+      body: JSON.stringify(definedFilters),
     });
 
     if (!apiRes.ok) {

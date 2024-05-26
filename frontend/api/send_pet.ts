@@ -2,18 +2,8 @@ import Swal from "sweetalert2";
 
 const SendPet = async (pet: any) => {
   try {
-    // const apiRes = await fetch(
-    //   `${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/create_pet/`,
-    //   {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify(pet),
-    //   }
-    // );
     const apiRes = await fetch(
-      `${process.env.NEXT_PUBLIC_FRONTEND_URL_KUBERNETES}/api/create_pet/`,
+      `/service-pets/api/create_pet/`,
       {
         method: "POST",
         headers: {

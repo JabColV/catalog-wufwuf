@@ -15,9 +15,6 @@ export async function GET(
       throw new Error("ID is required");
     }
 
-    // const apiRes = await fetch(
-    //   `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/mascotas/${getId}`
-    // );
     const apiRes = await fetch(
       `${process.env.NEXT_PUBLIC_BACKEND_ISOLATED_URL_KUBERNETES}/api/mascotas/${getId}`
     );

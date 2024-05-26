@@ -23,17 +23,7 @@ const fetchAllPets: QueryFunction<PetsAPIResponse, ["pets", { breed?: string; es
 
   try {
     console.log("Filters:", filters);
-    // const apiRes = await fetch(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/list_all_pets/`, {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     "Cache-Control": "no-cache",
-    //     Pragma: "no-cache",
-    //     Expires: "0",
-    //   },
-    //   body: JSON.stringify(filters),
-    // });
-    const apiRes = await fetch(`${process.env.NEXT_PUBLIC_FRONTEND_URL_KUBERNETES}/api/list_all_pets/`, {
+    const apiRes = await fetch(`/api/list_all_pets/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

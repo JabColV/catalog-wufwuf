@@ -25,7 +25,7 @@ export async function POST(req: Request) {
     //   },
     //   body: JSON.stringify({ breed, especie, age_min, age_max }),
     // });
-    const apiRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_ISOLATED_URL_KUBERNETES}/api/mascotas/admin/`, {
+    const apiRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_ISOLATED_URL}/api/mascotas/admin/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

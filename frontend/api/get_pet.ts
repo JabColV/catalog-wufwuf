@@ -6,17 +6,7 @@ const fetchPet: QueryFunction<Animal, ["pet", string]> = async ({
 }) => {
   try {
     const id = queryKey[1];
-
-    // const apiRes = await fetch(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/${id}`, {
-    //   method: "GET",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     "Cache-Control": "no-cache",
-    //     Pragma: "no-cache",
-    //     Expires: "0",
-    //   },
-    // });
-    const apiRes = await fetch(`${process.env.NEXT_PUBLIC_FRONTEND_URL_KUBERNETES}/api/${id}`, {
+    const apiRes = await fetch(`/api/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
