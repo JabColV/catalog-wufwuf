@@ -5,6 +5,40 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 from django.http import JsonResponse
 import json
+from datetime import date
+
+# Calculate the age of the pet in years
+def calculate_age(birth_date):
+    today = date.today()
+    age = today.year - birth_date.year - ((today.month, today.day) < (birth_date.month, birth_date.day))
+    return age
+@api_view(['GET'])
+def filter_pet_by_age(request):
+
+    # Obtener los parametros de consulta
+    age_min = request.GET.get('age_min')
+    age_max = request.GET.get('age_max')
+
+    mascotas = Mascota.objects.all()
+    mascotas_filtradas = []
+
+    for mascota in mascotas:
+        # Calcular la edad de la mascota en años
+        pet_age = calculate_age(mascota.birth_date)
+
+        # Aplicar la lógica de categorización
+        categoria_edad = "Cachorro" if pet_age <= 1 else "Adulto" if pet_age <= 7 else "Senior"
+
+        # Verificar si la mascota está en el rango de edad especificado
+        if (age_min is None or int(age_min) <= pet_age) and (age_max is None or int(age_max) >= pet_age):
+            # Agregar la mascota a la lista filtrada
+            mascotas_filtradas.append({
+                "nombre": mascota.name,
+                "edad": pet_age,
+                "categoria_edad": categoria_edad
+            })
+
+    return Response(mascotas_filtradas)
 
 @api_view(['GET'])
 def mascota_list(request):

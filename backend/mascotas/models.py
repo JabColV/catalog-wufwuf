@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.postgres.fields import ArrayField
 from django.utils import timezone
 
+
+
 class Mascota(models.Model):
     name = models.CharField(max_length=100,  default='Sin nombre')
     birth_date = models.DateField(default=timezone.now)
