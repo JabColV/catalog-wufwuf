@@ -50,15 +50,14 @@ def filter_pet_by_age(request):
     # Serializar la lista de mascotas filtradas
     serializer = MascotaSerializer(mascotas_filtradas, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
-
 @api_view(['GET'])
-def mascota_list(request):
+def mascota_list_admin(request):
     #Obtener los parametros de consulta
     especie= request.GET.get('especie')
     breed = request.GET.get('breed')
 
     #Filtrar las mascotas que no han sido adoptadas
-    mascotas = Mascota.objects.filter(adopted=False)
+    mascotas = Mascota.objects.all()
     
     if especie:
         mascotas = mascotas.filter(especie=especie)
@@ -66,6 +65,28 @@ def mascota_list(request):
         mascotas = mascotas.filter(breed=breed)
 
     print(mascotas)
+    serializer = MascotaSerializer(mascotas, many=True)
+    return Response(serializer.data)
+
+@api_view(['POST'])
+def mascota_list(request):
+    # Extraer datos del cuerpo de la solicitud JSON
+    try:
+        data = json.loads(request.body)
+    except json.JSONDecodeError:
+        return Response({'error': 'Invalid JSON'}, status=status.HTTP_400_BAD_REQUEST)
+    
+    especie = data.get('especie')
+    breed = data.get('breed')
+
+    # Filtrar las mascotas que no han sido adoptadas
+    mascotas = Mascota.objects.filter(adopted=False)
+
+    if especie:
+        mascotas = mascotas.filter(especie=especie)
+    if breed:
+        mascotas = mascotas.filter(breed=breed)
+
     serializer = MascotaSerializer(mascotas, many=True)
     return Response(serializer.data)
 
