@@ -19,26 +19,23 @@ def filter_pet_by_age(request):
     age_min = request.GET.get('age_min')
     age_max = request.GET.get('age_max')
 
-    mascotas = Mascota.objects.all()
+    # Filtrar las mascotas que no han sido adoptadas
+    mascotas = Mascota.objects.filter(adopted=False)
     mascotas_filtradas = []
 
     for mascota in mascotas:
         # Calcular la edad de la mascota en años
         pet_age = calculate_age(mascota.birth_date)
 
-        # Aplicar la lógica de categorización
-        categoria_edad = "Cachorro" if pet_age <= 1 else "Adulto" if pet_age <= 7 else "Senior"
 
         # Verificar si la mascota está en el rango de edad especificado
         if (age_min is None or int(age_min) <= pet_age) and (age_max is None or int(age_max) >= pet_age):
             # Agregar la mascota a la lista filtrada
-            mascotas_filtradas.append({
-                "nombre": mascota.name,
-                "edad": pet_age,
-                "categoria_edad": categoria_edad
-            })
+            mascotas_filtradas.append(mascota)
 
-    return Response(mascotas_filtradas)
+    # Serializar la lista de mascotas filtradas
+    serializer = MascotaSerializer(mascotas_filtradas, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 def mascota_list(request):
