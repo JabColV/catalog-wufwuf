@@ -2,8 +2,17 @@ import Swal from "sweetalert2";
 
 const PatchAdoptionField = async (id: any) => {
   try {
+    // const apiRes = await fetch(
+    //   `${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/patch_adopted_pet/${id}`,
+    //   {
+    //     method: "PATCH",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     }
+    //   }
+    // );
     const apiRes = await fetch(
-      `${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/patch_adopted_pet/${id}`,
+      `${process.env.NEXT_PUBLIC_FRONTEND_URL_KUBERNETES}/api/patch_adopted_pet/${id}`,
       {
         method: "PATCH",
         headers: {

@@ -6,8 +6,18 @@ export async function PUT(req, { params }: { params: ParamsProps }) {
   try {
     const getId = params.id;
     const body = await req.json();
+    // const apiRes = await fetch(
+    //   `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/mascotas/${getId}/actualizar/`,
+    //   {
+    //     method: "PUT",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify(body),
+    //   }
+    // );
     const apiRes = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/mascotas/${getId}/actualizar/`,
+      `${process.env.NEXT_PUBLIC_BACKEND_ISOLATED_URL_KUBERNETES}/api/mascotas/${getId}/actualizar/`,
       {
         method: "PUT",
         headers: {
@@ -16,10 +26,6 @@ export async function PUT(req, { params }: { params: ParamsProps }) {
         body: JSON.stringify(body),
       }
     );
-    // const apiRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_ISOLATED_URL_KUBERNETES}/api/mascotas/crear/`, {
-    //   method: "POST",
-    //   body: JSON.stringify(req.body),
-    // });
 
     if (!apiRes.ok) {
       throw new Error(`Error fetching /mascotas/crear: ${apiRes.statusText}`);

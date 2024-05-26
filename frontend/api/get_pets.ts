@@ -18,12 +18,12 @@ import { PetsAPIResponse } from "@types/types";
  * @description Esta función se encarga de realizar la petición para obtener a todas las mascotas.
  */
 
-const fetchAllPets: QueryFunction<PetsAPIResponse, ["pets", { breed?: string; especie?: string; age_min?: number, age_max?: number }]> = async ({ queryKey }) => {
+const fetchPets: QueryFunction<PetsAPIResponse, ["pets", { breed?: string; especie?: string; age_min?: number, age_max?: number }]> = async ({ queryKey }) => {
   const [key, filters] = queryKey;
 
   try {
     console.log("Filters:", filters);
-    // const apiRes = await fetch(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/list_all_pets/`, {
+    // const apiRes = await fetch(`${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/`, {
     //   method: "POST",
     //   headers: {
     //     "Content-Type": "application/json",
@@ -33,7 +33,7 @@ const fetchAllPets: QueryFunction<PetsAPIResponse, ["pets", { breed?: string; es
     //   },
     //   body: JSON.stringify(filters),
     // });
-    const apiRes = await fetch(`${process.env.NEXT_PUBLIC_FRONTEND_URL_KUBERNETES}/api/list_all_pets/`, {
+    const apiRes = await fetch(`${process.env.NEXT_PUBLIC_FRONTEND_URL_KUBERNETES}/api/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -58,4 +58,4 @@ const fetchAllPets: QueryFunction<PetsAPIResponse, ["pets", { breed?: string; es
   }
 };
 
-export default fetchAllPets;
+export default fetchPets;
