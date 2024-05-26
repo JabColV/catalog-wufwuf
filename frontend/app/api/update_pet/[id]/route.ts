@@ -1,13 +1,15 @@
+import { ParamsProps } from "@types/types";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { NextResponse } from "next/server";
 
-export async function POST(req, res) {
+export async function PUT(req, { params }: { params: ParamsProps }) {
   try {
+    const getId = params.id;
     const body = await req.json();
     const apiRes = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/mascotas/crear/`,
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/mascotas/${getId}/actualizar/`,
       {
-        method: "POST",
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
@@ -28,6 +30,6 @@ export async function POST(req, res) {
     return NextResponse.json(data);
   } catch (error) {
     console.error("Error al crear la mascota:", error);
-    return res.status(500).json({ error: "Error interno del servidor" });
+    // return res.status(500).json({ error: "Error interno del servidor" });
   }
 }

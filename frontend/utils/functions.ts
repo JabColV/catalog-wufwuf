@@ -12,21 +12,21 @@ export const validationSchema = Yup.object().shape({
   especie: Yup.string().required("La especie es requerida"),
   breed: Yup.string().required("La raza es requerida"),
   urls_images: Yup.array()
-    .of(
-      Yup.mixed().test(
-        "fileSize",
-        "Sólo se pemiten imágenes con peso máximo de 1MB",
-        (value) => {
-          // Verificar si el valor es un objeto de tipo File
-          if (value instanceof File) {
-            // Verificar si el tamaño del archivo es menor o igual a 1MB y si es de tipo imagen
-            if (value.size <= 1024 * 1024 && value.type.startsWith("image/")) {
-              return true;
-            }
-          }
-        }
-      )
-    )
+    // .of(
+    //   Yup.mixed().test(
+    //     "fileSize",
+    //     "Sólo se pemiten imágenes con peso máximo de 1MB",
+    //     (value) => {
+    //       // Verificar si el valor es un objeto de tipo File
+    //       if (value instanceof File) {
+    //         // Verificar si el tamaño del archivo es menor o igual a 1MB y si es de tipo imagen
+    //         if (value.size <= 1024 * 1024 && value.type.startsWith("image/")) {
+    //           return true;
+    //         }
+    //       }
+    //     }
+    //   )
+    // )
     .min(1, "Debe incluir al menos una imagen")
     .max(6, "Solo se permiten hasta 6 imágenes"),
   description: Yup.string().required("La descripción es requerida"),

@@ -14,7 +14,7 @@ const NuevasMascotas = () => {
       <h1 className="text-center text-5xl text-olivine-200 font-bold mb-5">
         Nueva Mascota
       </h1>
-      <Form accion="crear" data={dataPet} />
+      <Form accion="crear" data={dataPet} id={0} />
     </div>
   );
 };

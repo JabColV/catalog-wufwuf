@@ -11,7 +11,7 @@ import fetchPets from "@api/get_all_pets";
 
 const Catalogo = () => {
   const { data, status, isLoading, refetch } = useQuery<PetsAPIResponse>(
-    "list_pets",
+    "pets",
     fetchPets
   );
   let animals: PetsAPIResponse | undefined;

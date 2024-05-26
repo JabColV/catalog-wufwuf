@@ -1,6 +1,6 @@
 "use client";
 
-import fetchPet from "@app/api/[id]/route";
+import fetchPet from "@api/get_pet";
 import Error from "@components/Error";
 import Form from "@components/Form";
 import Loader from "@components/Loader";
@@ -9,6 +9,7 @@ import { useState, useEffect } from "react";
 import { useQuery } from "react-query";
 
 const UpdatePet = ({ params }: ParamsProps) => {
+
   const [dataToSend, setDataToSend] = useState(null);
   // Buscar la mascota con el id que se recibe en params
   const { data, status, isLoading, isError } = useQuery<Animal>(
@@ -27,7 +28,6 @@ const UpdatePet = ({ params }: ParamsProps) => {
         description: data.description,
       };
       setDataToSend(sent_data);
-      console.log("dataToSend", sent_data);
     }
   }, [status, data]);
 
@@ -46,7 +46,7 @@ const UpdatePet = ({ params }: ParamsProps) => {
       <h1 className="text-4xl text-center mt-8 text-olivine-800 font-extrabold mb-9">
         Actualizar Mascota con id: {params.id}
       </h1>
-      {dataToSend && <Form accion="update" data={dataToSend} />}
+      {dataToSend && <Form accion="update" data={dataToSend} id={params.id} />}
     </div>
   );
 };

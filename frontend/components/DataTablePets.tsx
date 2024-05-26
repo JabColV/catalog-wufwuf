@@ -54,7 +54,7 @@ const DataTablePets = ({ pets }: { pets: PetsAPIResponse }) => {
           <button onClick={() => handleRemove(row)}>
             <Image
               className="transform scale-x-[-1]"
-              src={"/assets/icons/trash.svg"}
+              src={"/assets/icons/pet_fingerprint.png"}
               alt="icono de perro"
               width={30}
               height={30}
@@ -94,11 +94,13 @@ const DataTablePets = ({ pets }: { pets: PetsAPIResponse }) => {
     Swal.fire({
       icon: "warning",
       title: "¿Estás seguro?",
-      text: `¿Quieres eliminar la mascota con identificador ${row.identificador}?`,
+      text: `¿Esta mascota con identificador ${
+        row.identificador
+      } ${row.adopted ? "sigue sin ser adoptada" : "ha sido adoptada"}?`,
       showCancelButton: true,
       confirmButtonColor: "#d33",
       cancelButtonColor: "#3085d6",
-      confirmButtonText: "Sí, eliminar",
+      confirmButtonText: "Sí, fue adoptada",
       cancelButtonText: "Cancelar",
     }).then((result) => {
       if (result.isConfirmed) {
@@ -113,6 +115,7 @@ const DataTablePets = ({ pets }: { pets: PetsAPIResponse }) => {
         });
       }
     });
+    
   };
 
   return (

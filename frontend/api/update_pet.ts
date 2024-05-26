@@ -1,12 +1,16 @@
 import Swal from "sweetalert2";
 
-const UpdatePet = async (pet: FormData) => {
+const UpdatePet = async (pet: any, id: any) => {
   try {
+    console.log("pet a editar", pet);
     const apiRes = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL_KUBERNETES}/api/mascotas/actualizar/`,
+      `${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/update_pet/${id}`,
       {
-        method: "POST",
-        body: pet,
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(pet),
       }
     );
     if (!apiRes.ok) {

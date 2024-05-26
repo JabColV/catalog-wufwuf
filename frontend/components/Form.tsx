@@ -8,68 +8,78 @@ import Image from "next/image";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 import { uploadFile } from "@firebase/config";
-import UpdatePet from "@app/api/update_pet/update_pet";
 import SendPet from "@api/send_pet";
+import UpdatePet from "@api/update_pet";
+import Loader from "./Loader";
 
-const Form = ({ accion, data }: { accion: string; data: any }) => {
+const Form = ({ accion, data, id }: { accion: string; data: any, id:any }) => {
+ 
   const {
     mutate: createMutation,
     isLoading: createLoading,
     isError: createError,
   } = useMutation("createPet", SendPet);
-  const {
-    mutate: updateMutation,
-    isLoading: updateLoading,
-    isError: updateError,
-  } = useMutation("updatePet", UpdatePet);
+
+  const { mutate: updateMutation, isLoading: updateLoading, } = useMutation((data) => UpdatePet(data, id));
+
   const [images, setImages] = useState<File[]>([]);
   const dataUrlImages = data.urls_images;
   const router = useRouter();
 
   const handleFormSubmit = async (values: any) => {
     const imageUrls: String[] = [];
-
-    // Subir todas las imágenes y obtener sus URLs
-    for (const image of images) {
-      const url = await uploadFile("pets", image);
-      imageUrls.push(url);
+    if (images.length > 0) {
+      // Subir todas las imágenes y obtener sus URLs
+      for (const image of images) {
+        const url = await uploadFile("pets", image);
+        imageUrls.push(url);
+      }
     }
 
+    console.log("Oee no está vacío", dataUrlImages);
     const petData = {
       name: values.name,
       birth_date: values.birth_date,
       especie: values.especie,
       breed: values.breed,
-      urls_images: imageUrls,
-      description: values.description
+      urls_images: imageUrls.length > 0 ? imageUrls : dataUrlImages,
+      description: values.description,
     };
-
     try {
       if (accion === "update") {
-        //await updateMutation(petData);
+        await updateMutation(petData);
       } else {
         await createMutation(petData);
       }
       if (!createError) {
-      Swal.fire({
-        icon: "success",
-        title: "¡Éxito!",
-        text: `La mascota se ha ${
-          accion === "update" ? "actualizado" : "creado"
-        } correctamente.`,
-        timer: 4000,
-        timerProgressBar: true,
-        showConfirmButton: false,
-      }).then(() => {
-        router.push("/catalogo");
-      });
-    }
+        Swal.fire({
+          icon: "success",
+          title: "¡Éxito!",
+          text: `La mascota se ha ${
+            accion === "update" ? "actualizado" : "creado"
+          } correctamente.`,
+          timer: 4000,
+          timerProgressBar: true,
+          showConfirmButton: false,
+        }).then(() => {
+          router.push("/catalogo");
+        });
+      }
     } catch (error) {
       console.error("Error:", error);
       // Manejo de errores
     }
   };
 
+  if (createLoading) {
+    // Si createLoading es true, se está cargando la consulta, muestra un indicador de carga o cualquier otro componente de carga que desees
+    return <Loader />;
+  }
+
+  if (updateLoading) {
+    // Si updateLoading es true, se está cargando la consulta, muestra un indicador de carga o cualquier otro componente de carga que desees
+    return <Loader />;
+  }
 
   return (
     <Formik
@@ -179,7 +189,8 @@ const Form = ({ accion, data }: { accion: string; data: any }) => {
             />
             <div className="flex flex-row gap-2 justify-center mt-2">
               {dataUrlImages.length > 0
-                ? // Si hay imágenes URL disponibles
+                ? 
+                // Si hay imágenes URL disponibles
                   dataUrlImages.map((image, index) => (
                     <Image
                       key={index}

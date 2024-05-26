@@ -2,13 +2,12 @@ import Swal from "sweetalert2";
 
 const SendPet = async (pet: any) => {
   try {
-    console.log("Pet_SEND_PET:", pet);
     const apiRes = await fetch(
       `${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/create_pet/`,
       {
         method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(pet),
       }
@@ -26,7 +25,6 @@ const SendPet = async (pet: any) => {
 
     const data = await apiRes.json();
     //console.log(data);
-
   } catch (error) {
     Swal.fire({
       icon: "error",

@@ -12,11 +12,30 @@ import { NextResponse } from "next/server";
 
 export async function GET(req, res) {
   try {
+    // Realizar la petición a la API
     const apiRes = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/mascotas/`
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/mascotas/`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Cache-Control": "no-cache",
+          Pragma: "no-cache",
+          Expires: "0",
+        },
+      }
     );
     // const apiRes = await fetch(
-    //   `${process.env.NEXT_PUBLIC_BACKEND_ISOLATED_URL_KUBERNETES}/api/mascotas/`
+    //   `${process.env.NEXT_PUBLIC_BACKEND_ISOLATED_URL_KUBERNETES}/api/mascotas/`,
+    //   {
+    //     method: "GET",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       "Cache-Control": "no-cache",
+    //       Pragma: "no-cache",
+    //       Expires: "0"
+    //     }
+    //   }
     // );
 
     if (!apiRes.ok) {
@@ -26,12 +45,29 @@ export async function GET(req, res) {
     // Convertir la respuesta a JSON
     const data = await apiRes.json();
 
-    // Enviar las mascotas como respuesta
-    return Response.json({data});
+    // Configurar encabezados para deshabilitar el cache
+    const headers = new Headers({
+      "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+      Pragma: "no-cache",
+      Expires: "0",
+    });
 
+    // Enviar las mascotas como respuesta
+    return new NextResponse(JSON.stringify({ data }), {
+      status: 200,
+      headers,
+    });
+
+    // Enviar las mascotas como respuesta
+    // res.status(200).json({ data });
+    // return NextResponse.json({ data });
   } catch (error) {
     console.error("Error al obtener las mascotas:", error);
-    res.status(500).json({ error: "Error interno del servidor" });
+    return new NextResponse(
+      JSON.stringify({ error: "Error interno del servidor" }),
+      {
+        status: 500,
+      }
+    );
   }
 }
-
