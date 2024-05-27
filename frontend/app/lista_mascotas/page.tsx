@@ -11,8 +11,8 @@ const ListPets = () => {
   const [breed, setBreed] = useState<string>("");
   const [especie, setEspecie] = useState<string>("");
   const [etapa, setEtapa] = useState<string>("");
-  const [age_min, setAgeMin] = useState<number>();
-  const [age_max, setAgeMax] = useState<number>();
+  const [age_min, setAgeMin] = useState<number | undefined>(undefined);
+  const [age_max, setAgeMax] = useState<number | undefined>(undefined);
 
   const { data, status, isLoading, refetch } = useQuery<PetsAPIResponse>(
     ["pets", { breed, especie, age_min, age_max }],

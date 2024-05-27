@@ -22,8 +22,15 @@ const fetchAllPets: QueryFunction<PetsAPIResponse, ["pets", { breed?: string; es
   const [key, filters] = queryKey;
 
   try {
-    console.log("Filters:", filters);
-    const apiRes = await fetch(`/api/list_all_pets/`, {
+    // Crear un nuevo objeto solo con los filtros definidos
+    const definedFilters: { [key: string]: any } = {};
+    (Object.keys(filters) as Array<keyof typeof filters>).forEach((key) => {
+      if (filters[key] !== undefined) {
+        definedFilters[key] = filters[key];
+      }
+    });
+    console.log("definedFilters:", definedFilters);
+    const apiRes = await fetch(`/service-pets/api/list_all_pets/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -31,7 +38,7 @@ const fetchAllPets: QueryFunction<PetsAPIResponse, ["pets", { breed?: string; es
         Pragma: "no-cache",
         Expires: "0",
       },
-      body: JSON.stringify(filters),
+      body: JSON.stringify(definedFilters),
     });
 
     if (!apiRes.ok) {

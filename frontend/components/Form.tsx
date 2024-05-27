@@ -62,7 +62,9 @@ const Form = ({ accion, data, id }: { accion: string; data: any, id:any }) => {
           timerProgressBar: true,
           showConfirmButton: false,
         }).then(() => {
-          router.push("/catalogo");
+          if (router){
+            router.push("/service-pets/catalogo");
+          }
         });
       }
     } catch (error) {

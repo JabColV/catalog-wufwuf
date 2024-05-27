@@ -6,7 +6,7 @@ const fetchPet: QueryFunction<Animal, ["pet", string]> = async ({
 }) => {
   try {
     const id = queryKey[1];
-    const apiRes = await fetch(`/api/${id}`, {
+    const apiRes = await fetch(`/service-pets/api/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

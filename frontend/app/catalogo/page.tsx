@@ -101,7 +101,7 @@ const Catalogo = () => {
       <div className="w-4/5 flex flex-wrap justify-center mx-auto gap-3 mb-7">
         {animals &&
           animals.map((animal: Animal) => (
-            <Link href={`/catalogo/${animal.id}`} key={animal.id}>
+            <Link href={`/service-pets/catalogo/${animal.id}`} key={animal.id}>
               <Card
                 url_image={animal.urls_images[0]}
                 name_animal={animal.name}

@@ -14,18 +14,6 @@ export async function POST(req: Request) {
     // Obtiene el cuerpo de la solicitud
     const { breed, especie, age_min, age_max } = await req.json();
 
-    // Realiza la petición a la API del backend
-    // const apiRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/mascotas/`, {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     // "Cache-Control": "no-cache",
-    //     // Pragma: "no-cache",
-    //     // Expires: "0",
-    //   },
-    //   body: JSON.stringify({ breed, especie, age_min, age_max }),
-    // });
-    console.log("Antes: ",req.body)
     const apiRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_ISOLATED_URL_KUBERNETES}/api/mascotas/`, {
       method: "POST",
       headers: {
@@ -33,7 +21,6 @@ export async function POST(req: Request) {
       },
       body: JSON.stringify({ breed, especie, age_min, age_max }),
     });
-    console.log("Después: ",req.body)
 
     if (!apiRes.ok) {
       throw new Error(`Error fetching /mascotas: ${apiRes.statusText}`);
