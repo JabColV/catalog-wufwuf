@@ -1,11 +1,11 @@
 import Swal from "sweetalert2";
 
-const SendPet = async (pet: any) => {
+const UpdatePet = async (pet: any, id: any) => {
   try {
     const apiRes = await fetch(
-      `/service-pets/api/create_pet/`,
+      `/api/update_pet/${id}`,
       {
-        method: "POST",
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
@@ -15,9 +15,6 @@ const SendPet = async (pet: any) => {
     if (!apiRes.ok) {
       throw new Error(`Error fetching /mascotas/crear: ${apiRes.statusText}`);
     }
-
-    const data = await apiRes.json();
-    //console.log(data);
   } catch (error) {
     Swal.fire({
       icon: "error",
@@ -27,4 +24,4 @@ const SendPet = async (pet: any) => {
   }
 };
 
-export default SendPet;
+export default UpdatePet;

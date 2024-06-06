@@ -1,23 +1,21 @@
 import Swal from "sweetalert2";
 
-const SendPet = async (pet: any) => {
+const PatchAdoptionField = async (id: any) => {
   try {
     const apiRes = await fetch(
-      `/service-pets/api/create_pet/`,
+      `/api/patch_adopted_pet/${id}`,
       {
-        method: "POST",
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-        },
-        body: JSON.stringify(pet),
+        }
       }
     );
     if (!apiRes.ok) {
-      throw new Error(`Error fetching /mascotas/crear: ${apiRes.statusText}`);
+      throw new Error(
+        `Error fetching /mascotas/actualizar estado de adopcion: ${apiRes.statusText}`
+      );
     }
-
-    const data = await apiRes.json();
-    //console.log(data);
   } catch (error) {
     Swal.fire({
       icon: "error",
@@ -27,4 +25,4 @@ const SendPet = async (pet: any) => {
   }
 };
 
-export default SendPet;
+export default PatchAdoptionField;

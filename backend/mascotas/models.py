@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.postgres.fields import ArrayField
 from django.utils import timezone
 
+
+
 class Mascota(models.Model):
     name = models.CharField(max_length=100,  default='Sin nombre')
     birth_date = models.DateField(default=timezone.now)
@@ -14,6 +16,7 @@ class Mascota(models.Model):
     ) # Campo para almacenar varias URLs de imagenes
     description = models.TextField(default='Sin descripción')
     creation_date = models.DateTimeField(auto_now_add=True)
+    adopted = models.BooleanField(default=False) #Campo para indicar si la mascota esta adoptada
 
     def __str__(self):
         return self.name

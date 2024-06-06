@@ -2,21 +2,25 @@
 
 import AnimalGallery from "@components/AnimalGallery";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "@components/Modal";
 import { Animal, ParamsProps } from "@types/types";
-import fetchPet from "@api/get_pet";
 import { useQuery } from "react-query";
 import { calcularEtapaVida } from "@utils/functions";
 import Error from "@components/Error";
 import Loader from "@components/Loader";
+import fetchPet from "@api/get_pet";
 
 const AnimalDetails = ({ params }: ParamsProps) => {
   const [showModal, setShowModal] = useState(false);
-  const { data, status, isLoading, isError } = useQuery<Animal>(
+  const { data, status, isLoading, isError, refetch } = useQuery<Animal>(
     ["pet", params.id],
     fetchPet
   );
+
+  useEffect(() => {
+    refetch();
+  }, []);
 
   if (isLoading) {
     // Si isLoading es true, se está cargando la consulta, muestra un indicador de carga o cualquier otro componente de carga que desees

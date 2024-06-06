@@ -1,0 +1,55 @@
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: catalog-back-deployment
+#   labels:
+#     name: catalog-back
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       name: catalog-back-pod
+#   template:
+#     metadata:
+#       labels:
+#         name: catalog-back-pod
+#     spec:
+#       containers:
+#         - name: catalog-back-container
+#           image: nicolort/catalog-back-app:latest
+#           ports:
+#             - containerPort: 8000
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: catalog-back-pod
+  labels:
+    name: catalog-back-pod
+    app: pets
+spec:
+  containers:
+    - name: catalog-back-pod
+      image: nicolort/catalog-back-app:latest
+      ports:
+       - containerPort: 8000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: catalog-back-service
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8000 # Port exposed by the service internally within the cluster
+      targetPort: 8000 # Port on the pods to which traffic will be forwarded
+      protocol: TCP
+  selector:
+    name: catalog-back-pod
+    app: pets
+
+
+
+
+
+
