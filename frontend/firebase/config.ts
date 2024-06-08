@@ -6,7 +6,7 @@ let storage: any;
 
 const initializeFirebase = async () => {
   try {
-    const response = await fetch('/firebase-config.json');
+    const response = await fetch('/service-pets/firebase-config.json');
     if (!response.ok) {
       throw new Error('Network response was not ok ' + response.statusText);
     }

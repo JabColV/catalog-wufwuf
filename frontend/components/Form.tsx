@@ -63,7 +63,7 @@ const Form = ({ accion, data, id }: { accion: string; data: any, id:any }) => {
           showConfirmButton: false,
         }).then(() => {
           if (router){
-            router.push("service-pets/catalogo");
+            router.push("/service-pets/catalogo");
           }
         });
       }

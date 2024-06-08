@@ -17,7 +17,7 @@ const SendPet = async (pet: any) => {
     }
 
     const data = await apiRes.json();
-    //console.log(data);
+    console.log("send_pet ",data);
   } catch (error) {
     Swal.fire({
       icon: "error",
