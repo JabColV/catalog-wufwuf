@@ -33,7 +33,7 @@ const fetchPets: QueryFunction<PetsAPIResponse, ["pets", { breed?: string; espec
 
     console.log("definedFilters:", definedFilters);
     // /service-pets/
-    const apiRes = await fetch(`/service-pets/api/`, {
+    const apiRes = await fetch(`/api/pets/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

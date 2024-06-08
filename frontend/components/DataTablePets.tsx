@@ -116,7 +116,7 @@ const DataTablePets = ({ pets }: { pets: PetsAPIResponse }) => {
   );
 
   const handleEdit = (row) => {
-    router.push(`/lista_mascotas/${row.identificador}`);
+    router.push(`service-pets/lista_mascotas/${row.identificador}`);
   };
 
   const handleAdopted = (row) => {

@@ -30,7 +30,7 @@ const fetchAllPets: QueryFunction<PetsAPIResponse, ["pets", { breed?: string; es
       }
     });
     console.log("definedFilters:", definedFilters);
-    const apiRes = await fetch(`/service-pets/api/list_all_pets/`, {
+    const apiRes = await fetch(`/api/list_all_pets/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

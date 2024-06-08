@@ -3,7 +3,7 @@ import Swal from "sweetalert2";
 const SendPet = async (pet: any) => {
   try {
     const apiRes = await fetch(
-      `/service-pets/api/create_pet/`,
+      `/api/create_pet/`,
       {
         method: "POST",
         headers: {
