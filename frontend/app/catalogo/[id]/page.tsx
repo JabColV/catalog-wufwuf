@@ -96,8 +96,7 @@ const AnimalDetails = ({ params }: ParamsProps) => {
                   Deseo agendar una cita como:
                 </h1>
                 <div className="space-y-2">
-                  {/* <button className="btn" onClick={() => router.push("/service-scheduling")}> */}
-                  <button className="btn">
+                  <button className="btn" onClick={() => router.push("/service-dates")}> 
                     Invitado
                   </button>
                   <button className="btn" onClick={() => router.push("/service-users/login")}>
