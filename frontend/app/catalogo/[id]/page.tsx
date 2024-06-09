@@ -19,10 +19,17 @@ const AnimalDetails = ({ params }: ParamsProps) => {
     ["pet", params.id],
     fetchPet
   );
+  let animal: Animal | undefined;
 
   useEffect(() => {
     refetch();
   }, []);
+
+  useEffect(() => {
+    if (!data) return;
+    // Guarda el animal seleccionado en el localStorage
+    localStorage.setItem('selectedAnimal', JSON.stringify(data));
+  }, [data]);
 
   if (isLoading) {
     // Si isLoading es true, se está cargando la consulta, muestra un indicador de carga o cualquier otro componente de carga que desees
@@ -34,7 +41,6 @@ const AnimalDetails = ({ params }: ParamsProps) => {
     return <Error />;
   }
 
-  let animal: Animal | undefined;
   if (status === "success") {
     // Solo asigna `data` a `animals` si el estado de la consulta es exitoso (`success`)
     animal = data as Animal;
