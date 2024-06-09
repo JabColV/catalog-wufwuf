@@ -14,13 +14,16 @@ export async function POST(req: Request) {
     // Obtiene el cuerpo de la solicitud
     const { breed, especie, age_min, age_max } = await req.json();
 
-    const apiRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_ISOLATED_URL_KUBERNETES}/api/mascotas/`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ breed, especie, age_min, age_max }),
-    });
+    const apiRes = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_ISOLATED_URL_KUBERNETES}/api/mascotas/`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ breed, especie, age_min, age_max }),
+      }
+    );
 
     if (!apiRes.ok) {
       throw new Error(`Error fetching /mascotas: ${apiRes.statusText}`);
@@ -41,8 +44,6 @@ export async function POST(req: Request) {
       status: 200,
       headers,
     });
-
-
   } catch (error) {
     console.error("Error al obtener las mascotas:", error);
     return new NextResponse(
@@ -53,6 +54,3 @@ export async function POST(req: Request) {
     );
   }
 }
-
-
-

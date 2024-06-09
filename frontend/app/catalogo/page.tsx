@@ -10,7 +10,6 @@ import { useEffect, useState } from "react";
 import fetchPets from "@api/get_pets";
 
 const Catalogo = () => {
-
   const [breed, setBreed] = useState<string>("");
   const [especie, setEspecie] = useState<string>("");
   const [etapa, setEtapa] = useState<string>("");
@@ -84,8 +83,7 @@ const Catalogo = () => {
             } else if (e.target.value === "senior") {
               setAgeMin(7);
               setAgeMax(100);
-            } 
-            else {
+            } else {
               setAgeMin(undefined);
               setAgeMax(undefined);
             }

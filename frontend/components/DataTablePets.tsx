@@ -99,7 +99,11 @@ const DataTablePets = ({ pets }: { pets: PetsAPIResponse }) => {
         setRecords((prevRecords) =>
           prevRecords.map((record) =>
             record.identificador === pet_id
-              ? { ...record, adopted: record.adopted === "Adoptado" ? "Sin adoptar" : "Adoptado" }
+              ? {
+                  ...record,
+                  adopted:
+                    record.adopted === "Adoptado" ? "Sin adoptar" : "Adoptado",
+                }
               : record
           )
         );
@@ -123,13 +127,19 @@ const DataTablePets = ({ pets }: { pets: PetsAPIResponse }) => {
     Swal.fire({
       icon: "warning",
       title: "¿Estás seguro?",
-      text: `¿Esta mascota con identificador ${
-        row.identificador
-      } ${row.adopted === "Sin adoptar" ? "ha sido adoptada" : "no ha sido adoptada"}?`,
+      text: `¿Esta mascota con identificador ${row.identificador} ${
+        row.adopted === "Sin adoptar"
+          ? "ha sido adoptada"
+          : "no ha sido adoptada"
+      }?`,
       showCancelButton: true,
       confirmButtonColor: "#d33",
       cancelButtonColor: "#3085d6",
-      confirmButtonText: `${row.adopted === "Sin adoptar" ? "Si, fue adoptada" : "No, no ha sido adoptada"}`,
+      confirmButtonText: `${
+        row.adopted === "Sin adoptar"
+          ? "Si, fue adoptada"
+          : "No, no ha sido adoptada"
+      }`,
       cancelButtonText: "Cancelar",
     }).then((result) => {
       if (result.isConfirmed) {
@@ -159,9 +169,6 @@ const DataTablePets = ({ pets }: { pets: PetsAPIResponse }) => {
 };
 
 export default DataTablePets;
-
-
-
 
 // "use client";
 
@@ -289,7 +296,7 @@ export default DataTablePets;
 //         }
 //       }
 //     });
-    
+
 //   };
 
 //   return (

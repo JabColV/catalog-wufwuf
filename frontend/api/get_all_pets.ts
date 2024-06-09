@@ -18,7 +18,13 @@ import { PetsAPIResponse } from "@types/types";
  * @description Esta función se encarga de realizar la petición para obtener a todas las mascotas.
  */
 
-const fetchAllPets: QueryFunction<PetsAPIResponse, ["pets", { breed?: string; especie?: string; age_min?: number, age_max?: number }]> = async ({ queryKey }) => {
+const fetchAllPets: QueryFunction<
+  PetsAPIResponse,
+  [
+    "pets",
+    { breed?: string; especie?: string; age_min?: number; age_max?: number }
+  ]
+> = async ({ queryKey }) => {
   const [key, filters] = queryKey;
 
   try {
@@ -48,7 +54,6 @@ const fetchAllPets: QueryFunction<PetsAPIResponse, ["pets", { breed?: string; es
     const data = await apiRes.json();
 
     return data.data;
-
   } catch (error) {
     console.error("Error en fetchPets:", error);
     throw error;

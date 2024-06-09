@@ -11,7 +11,11 @@ export const calcularEtapaVida = (date_birth: Date): string => {
 
   if (edad < 1) {
     return "cachorro";
-  } else if (edad === 1 && (mesActual < mesNacimiento || (mesActual === mesNacimiento && diaActual < diaNacimiento))) {
+  } else if (
+    edad === 1 &&
+    (mesActual < mesNacimiento ||
+      (mesActual === mesNacimiento && diaActual < diaNacimiento))
+  ) {
     return "cachorro"; // Si tienen menos de un año y aún no ha cumplido su primer año
   } else if (edad < 7) {
     return "adulto";
@@ -19,7 +23,6 @@ export const calcularEtapaVida = (date_birth: Date): string => {
     return "senior";
   }
 };
-
 
 export const validationSchema = Yup.object().shape({
   name: Yup.string().required("El nombre es requerido"),

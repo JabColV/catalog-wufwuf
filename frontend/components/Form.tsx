@@ -12,15 +12,16 @@ import UpdatePet from "@api/update_pet";
 import Loader from "./Loader";
 import CustomImage from "./CustomImage";
 
-const Form = ({ accion, data, id }: { accion: string; data: any, id:any }) => {
- 
+const Form = ({ accion, data, id }: { accion: string; data: any; id: any }) => {
   const {
     mutate: createMutation,
     isLoading: createLoading,
     isError: createError,
   } = useMutation("createPet", SendPet);
 
-  const { mutate: updateMutation, isLoading: updateLoading, } = useMutation((data) => UpdatePet(data, id));
+  const { mutate: updateMutation, isLoading: updateLoading } = useMutation(
+    (data) => UpdatePet(data, id)
+  );
 
   const [images, setImages] = useState<File[]>([]);
   const dataUrlImages = data.urls_images;
@@ -62,7 +63,7 @@ const Form = ({ accion, data, id }: { accion: string; data: any, id:any }) => {
           timerProgressBar: true,
           showConfirmButton: false,
         }).then(() => {
-          if (router){
+          if (router) {
             router.push("/service-pets/catalogo");
           }
         });
@@ -191,8 +192,7 @@ const Form = ({ accion, data, id }: { accion: string; data: any, id:any }) => {
             />
             <div className="flex flex-row gap-2 justify-center mt-2">
               {dataUrlImages.length > 0
-                ? 
-                // Si hay imágenes URL disponibles
+                ? // Si hay imágenes URL disponibles
                   dataUrlImages.map((image, index) => (
                     <CustomImage
                       key={index}

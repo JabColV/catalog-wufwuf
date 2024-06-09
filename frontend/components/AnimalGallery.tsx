@@ -26,7 +26,12 @@ const AnimalGallery = ({ animal_info }: AnimalGalleryProps) => {
             className="w-24 h-24 cursor-pointer border relative rounded-full overflow-hidden shadow-lg lg:w-28 lg:h-28 xl:w-36 xl:h-36 transform transition-transform hover:scale-110"
             onClick={() => setSelectedImage(image)}
           >
-            <CustomImage src={image} alt={name} width={undefined} height={undefined}/>
+            <CustomImage
+              src={image}
+              alt={name}
+              width={undefined}
+              height={undefined}
+            />
           </div>
         ))}
       </div>

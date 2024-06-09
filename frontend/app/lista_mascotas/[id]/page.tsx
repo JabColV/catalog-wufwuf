@@ -9,7 +9,6 @@ import { useState, useEffect } from "react";
 import { useQuery } from "react-query";
 
 const UpdatePet = ({ params }: ParamsProps) => {
-
   const [dataToSend, setDataToSend] = useState(null);
   // Buscar la mascota con el id que se recibe en params
   const { data, status, isLoading, isError } = useQuery<Animal>(

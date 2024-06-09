@@ -20,7 +20,7 @@ export async function PATCH(req, { params }: { params: ParamsProps }) {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-        }
+        },
       }
     );
 
@@ -36,4 +36,3 @@ export async function PATCH(req, { params }: { params: ParamsProps }) {
     // return res.status(500).json({ error: "Error interno del servidor" });
   }
 }
-

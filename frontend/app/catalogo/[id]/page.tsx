@@ -28,7 +28,7 @@ const AnimalDetails = ({ params }: ParamsProps) => {
   useEffect(() => {
     if (!data) return;
     // Guarda el animal seleccionado en el localStorage
-    localStorage.setItem('selectedAnimal', JSON.stringify(data));
+    localStorage.setItem("selectedAnimal", JSON.stringify(data));
   }, [data]);
 
   if (isLoading) {
@@ -96,10 +96,16 @@ const AnimalDetails = ({ params }: ParamsProps) => {
                   Deseo agendar una cita como:
                 </h1>
                 <div className="space-y-2">
-                  <button className="btn" onClick={() => router.push("/service-dates")}> 
+                  <button
+                    className="btn"
+                    onClick={() => router.push("/service-dates")}
+                  >
                     Invitado
                   </button>
-                  <button className="btn" onClick={() => router.push("/service-users/login")}>
+                  <button
+                    className="btn"
+                    onClick={() => router.push("/service-users/login")}
+                  >
                     Iniciando Sesión
                   </button>
                 </div>
