@@ -5,9 +5,7 @@ export default async function handler(req, res) {
       const cookies = req.headers.cookie;
 
       // Buscar la cookie llamada 'access-token'
-      const accessTokenCookie = cookies
-        .split(";")
-        .find((cookie) => cookie.trim().startsWith("access-token="));
+      const accessTokenCookie = cookies.split(";").find((cookie) => cookie.trim().startsWith("access-token="));
 
       // Obtener el valor de la cookie 'access-token'
       const accessToken = accessTokenCookie
@@ -17,7 +15,7 @@ export default async function handler(req, res) {
       let preRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_TOKEN}`, {
         method: "GET",
         headers: {
-          accept: "application/json",
+          "accept": "application/json",
           "Content-Type": "application/json",
           "access-token": accessToken,
         },
