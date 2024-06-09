@@ -4,6 +4,7 @@ import fetchAllPets from "@api/get_all_pets";
 import DataTablePets from "@components/DataTablePets";
 import Loader from "@components/Loader";
 import { PetsAPIResponse } from "@types/types";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 
@@ -19,6 +20,7 @@ const ListPets = () => {
     fetchAllPets
   );
   let animals: PetsAPIResponse | undefined;
+  const router = useRouter();
 
   useEffect(() => {
     refetch();
@@ -39,6 +41,7 @@ const ListPets = () => {
       <h1 className="text-4xl text-center mt-8 text-olivine-800 font-extrabold mb-9">
         Listado de mascotas{" "}
       </h1>
+      <button className="bg-olivine-400 mx-auto text-white font-bold py-2 px-4 rounded mb-4"onClick={() => router.push("/service-pets/nuevas_mascotas")}>Crear Nueva Mascota</button> 
       {animals && <DataTablePets pets={animals} />}
     </div>
   );
