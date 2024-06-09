@@ -10,9 +10,11 @@ import Error from "@components/Error";
 import Loader from "@components/Loader";
 import fetchPet from "@api/get_pet";
 import CustomImage from "@components/CustomImage";
+import { useRouter } from "next/navigation";
 
 const AnimalDetails = ({ params }: ParamsProps) => {
   const [showModal, setShowModal] = useState(false);
+  const router = useRouter();
   const { data, status, isLoading, isError, refetch } = useQuery<Animal>(
     ["pet", params.id],
     fetchPet
@@ -88,8 +90,13 @@ const AnimalDetails = ({ params }: ParamsProps) => {
                   Deseo agendar una cita como:
                 </h1>
                 <div className="space-y-2">
-                  <button className="btn">Invitado</button>
-                  <button className="btn">Iniciando Sesión</button>
+                  {/* <button className="btn" onClick={() => router.push("/service-scheduling")}> */}
+                  <button className="btn">
+                    Invitado
+                  </button>
+                  <button className="btn" onClick={() => router.push("/service-users/login")}>
+                    Iniciando Sesión
+                  </button>
                 </div>
               </div>
             </Modal>

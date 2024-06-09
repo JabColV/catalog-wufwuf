@@ -1,4 +1,5 @@
 "use client";
+import Navbar from "@components/Navbar";
 import "@css/globals.css";
 import { QueryClient, QueryClientProvider } from "react-query";
 
@@ -25,6 +26,7 @@ const RootLayout = ({ children }: RootLayoutProps) => {
     <QueryClientProvider client={queryClient}>
       <html lang="es">
         <body>
+          <Navbar />
           <div id="modal"></div>
           <main className="app">{children}</main>
         </body>
