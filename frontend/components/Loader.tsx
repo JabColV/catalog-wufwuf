@@ -1,11 +1,11 @@
-import Image from "next/image";
 import React from "react";
+import CustomImage from "./CustomImage";
 
 const Loader = () => {
   return (
     <div className="flex items-center justify-center w-full min-h-screen">
       <button type="button" className="w-32 h-32" disabled>
-        <Image
+        <CustomImage
           src="/assets/icons/loader.gif"
           alt="loading"
           width={100}

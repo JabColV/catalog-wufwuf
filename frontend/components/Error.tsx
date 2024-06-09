@@ -1,9 +1,9 @@
-import Image from "next/image";
+import CustomImage from "./CustomImage";
 
 const Error = () => {
   return (
     <div className="w-full min-h-screen mx-auto flex items-center flex-col bg-olivine-300">
-      <Image
+      <CustomImage
         width={300}
         height={300}
         src={"/assets/dogs_images_optimized/no_encontrado.png"}

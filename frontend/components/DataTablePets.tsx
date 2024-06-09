@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import DataTable from "react-data-table-component";
 import { PetsAPIResponse } from "@types/types";
 import { useState } from "react";
@@ -8,6 +7,7 @@ import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import { useMutation } from "react-query";
 import PatchAdoptionField from "@api/path_adopted";
+import CustomImage from "./CustomImage";
 
 const DataTablePets = ({ pets }: { pets: PetsAPIResponse }) => {
   const router = useRouter();
@@ -49,16 +49,16 @@ const DataTablePets = ({ pets }: { pets: PetsAPIResponse }) => {
       cell: (row) => (
         <>
           <button onClick={() => handleEdit(row)}>
-            <Image
+            <CustomImage
               className="transform scale-x-[-1]"
-              src={"/assets/icons/edit.svg"}
+              src={"/assets/icons/usuario.png"}
               alt="icono de perro"
               width={30}
               height={30}
             />
           </button>
           <button onClick={() => handleAdopted(row)}>
-            <Image
+            <CustomImage
               className="transform scale-x-[-1]"
               src={"/assets/icons/pet_fingerprint.png"}
               alt="icono de perro"

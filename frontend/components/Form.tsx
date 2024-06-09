@@ -4,13 +4,13 @@ import { Formik } from "formik";
 import { useMutation } from "react-query";
 import { validationSchema } from "@utils/functions";
 import { useState } from "react";
-import Image from "next/image";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 import { uploadFile } from "@firebase/config";
 import SendPet from "@api/send_pet";
 import UpdatePet from "@api/update_pet";
 import Loader from "./Loader";
+import CustomImage from "./CustomImage";
 
 const Form = ({ accion, data, id }: { accion: string; data: any, id:any }) => {
  
@@ -194,13 +194,13 @@ const Form = ({ accion, data, id }: { accion: string; data: any, id:any }) => {
                 ? 
                 // Si hay imágenes URL disponibles
                   dataUrlImages.map((image, index) => (
-                    <Image
+                    <CustomImage
                       key={index}
-                      className="w-50 h-50 rounded-md object-cover"
-                      width={50}
-                      height={50}
+                      className="w-50 h-50 rounded-md"
                       src={image}
                       alt="imagen de una mascota"
+                      width={50}
+                      height={50}
                     />
                   ))
                 : // Si no hay imágenes URL disponibles, mostramos las imágenes cargadas
@@ -208,7 +208,7 @@ const Form = ({ accion, data, id }: { accion: string; data: any, id:any }) => {
                   images.map(
                     (image, index) =>
                       index < 4 && (
-                        <Image
+                        <CustomImage
                           key={index}
                           className="w-50 h-50 rounded-md object-cover"
                           width={50}

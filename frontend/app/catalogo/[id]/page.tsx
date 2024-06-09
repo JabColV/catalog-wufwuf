@@ -1,7 +1,6 @@
 "use client";
 
 import AnimalGallery from "@components/AnimalGallery";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import Modal from "@components/Modal";
 import { Animal, ParamsProps } from "@types/types";
@@ -10,6 +9,7 @@ import { calcularEtapaVida } from "@utils/functions";
 import Error from "@components/Error";
 import Loader from "@components/Loader";
 import fetchPet from "@api/get_pet";
+import CustomImage from "@components/CustomImage";
 
 const AnimalDetails = ({ params }: ParamsProps) => {
   const [showModal, setShowModal] = useState(false);
@@ -43,8 +43,8 @@ const AnimalDetails = ({ params }: ParamsProps) => {
       {animal && (
         <div className="mb-11 max-w-7xl mx-auto">
           <div className="flex items-center justify-center mt-8 space-x-3">
-            <Image
-              src={"/assets/icons/bxs-cat.svg"}
+            <CustomImage
+              src={"/assets/icons/gato.png"}
               alt="icono de perro"
               width={40}
               height={40}
@@ -52,9 +52,8 @@ const AnimalDetails = ({ params }: ParamsProps) => {
             <h1 className="text-xl sm:text-4xl text-center mt-8 text-olivine-800 font-extrabold mb-9">
               Detalles de {animal.name}
             </h1>
-            <Image
-              className="transform scale-x-[-1]"
-              src={"/assets/icons/bxs-dog.svg"}
+            <CustomImage
+              src={"/assets/icons/dogo-argentino.png"}
               alt="icono de perro"
               width={40}
               height={40}
@@ -77,9 +76,9 @@ const AnimalDetails = ({ params }: ParamsProps) => {
           {showModal ? (
             <Modal>
               <div className="w-11/12 p-3 bg-olivine-300 rounded-lg mx-auto relative">
-                <Image
+                <CustomImage
                   className="absolute top-0 right-0 m-1 cursor-pointer"
-                  src="/assets/icons/bx-x-circle.svg"
+                  src="/assets/icons/equis.png"
                   alt="icono de perro"
                   width={40}
                   height={40}
